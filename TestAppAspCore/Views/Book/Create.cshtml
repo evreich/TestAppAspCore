@@ -1,0 +1,30 @@
+﻿@model IEnumerable<TestAppAspCore.Models.Genre>
+@{
+    ViewData["Title"] = "Создать книгу";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <h2>Создание книги</h2>
+
+    <form method="post">
+        <label id="lbForTitle">Наименование: </label><br />
+        <input type="text" id="tbTitle" name="Title" /><br /><br />
+        <label id="lbForAuthor">Автор: </label><br />
+        <input type="text" id="tbAuthor" name="Author" /><br /><br />
+        <label id="lbForGenre">Жанр: </label><br />
+        <select name="GenreId">
+            <option value="">Выберите жанр</option>
+            @foreach (var genre in Model)
+        {
+            <option value="@genre.Id">@genre.Title</option>
+    }
+        </select><br /><br />
+        <label id="lbForDate">Год создания: </label><br />
+        <input type="date" id="numDateRealize" name="DateCreating" /><br /><br />
+        <input type="submit" value="Создать" />
+        <br />
+        <a href="~/Home/ShowBooks">Назад</a>
+    </form>
+</div>
+
+

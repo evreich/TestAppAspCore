@@ -1,0 +1,32 @@
+﻿@model IEnumerable<TestAppAspCore.Models.Book>
+@{
+    ViewData["Title"] = "Список книг";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h2>Список книг</h2>
+    <table class="table-condensed">
+        <tr>
+            <td>Название</td>
+            <td>Автор</td>
+            <td>Жанр</td>
+            <td>Дата создания</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var book in Model)
+        {
+        <tr>
+            <td>@book.Title</td>
+            <td>@book.Author</td>
+            <td>@book.Genre.Title</td>
+            <td>@book.DateCreating.Year</td>
+            <td><a href="~/Book/Edit/@book.Id">Изменить</a></td>
+            <td><a href="~/Book/Delete/@book.Id">Удалить</a></td>
+        </tr>
+        }
+    </table>
+    <br />
+    <button id="createBook">Создание книги</button>
+</div>

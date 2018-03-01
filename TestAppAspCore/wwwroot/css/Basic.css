@@ -1,0 +1,40 @@
+﻿body {
+    font-family: Arial;
+}
+p {
+    font-size: 14px;
+}
+td{
+    padding: 5px;
+}
+
+tr:first-child{
+    border-bottom:2px solid black;
+}
+
+.navbar-no-padding{
+    padding: 0 0 10px 0;
+}
+
+.navbar-custom{
+    background: darkolivegreen;
+}
+
+.navbar-custom ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.navbar-custom li{
+    float:left;
+}
+
+.navbar-custom a {
+    color: cornsilk;
+    display: block;
+    text-align: center;
+    padding: 14px 16px 5px 0;
+    text-decoration: none;
+}
