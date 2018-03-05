@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/Basic.css" />
-    <script src="~/js/Basic.js"></script>
+    <link rel="stylesheet" href="~/css/Basic.css" asp-append-version="true" />
+    <link rel="icon" href="~/images/favicon.ico" type="image/x-icon" />
 </head>
 <body>
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse mb-4 navbar-no-padding navbar-custom">
         <div class="container">
             <div class="navbar-collapse">
                 <ul>
-                    <li class="nav-item"><a class="nav-link" href="~/Home/ShowBooks">Список книг</a></li>
+                    <li class="nav-item"><a asp-controller="Home" asp-action="ShowBooks" class="nav-link">Список книг</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Список жанров</a></li>
                 </ul>
             </div>
@@ -28,7 +28,14 @@
     <div class="container">
         <footer>
             <p>©@DateTime.Now.Year - BooksStore</p>
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                    asp-fallback-src="~/lib/jQuery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery">
+            </script>
+            @RenderSection("Footer", false)
+
         </footer>
     </div>
+    
 </body>
 </html>

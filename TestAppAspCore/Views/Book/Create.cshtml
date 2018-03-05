@@ -1,30 +1,42 @@
-﻿@model IEnumerable<TestAppAspCore.Models.Genre>
+﻿@model TestAppAspCore.ViewModels.ActionBooksPagesViewModel
 @{
     ViewData["Title"] = "Создать книгу";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div>
     <h2>Создание книги</h2>
+    <form asp-controller="Book" asp-action="Create" asp-antiforgery="true" method="post">
+        <div class="validation" asp-validation-summary="ModelOnly" />
+        <div>
+            <label asp-for="Book.Title"></label><br />
+            <input type="text" asp-for="Book.Title" />
+            <span asp-validation-for="Book.Title" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Book.Author"></label><br />
+            <input type="text" asp-for="Book.Author" />
+            <span asp-validation-for="Book.Author" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Book.GenreId"></label><br />
+            <select asp-for="Book.GenreId" asp-items="Model.Genres">
+                <option selected="selected" value="">Выберите жанр</option>
+            </select>
+            <span asp-validation-for="Book.GenreId" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Book.DateCreating"></label><br />
+            <input type="date" asp-for="Book.DateCreating" />
+            <span asp-validation-for="Book.DateCreating" class="text-danger"></span>
+        </div>
 
-    <form method="post">
-        <label id="lbForTitle">Наименование: </label><br />
-        <input type="text" id="tbTitle" name="Title" /><br /><br />
-        <label id="lbForAuthor">Автор: </label><br />
-        <input type="text" id="tbAuthor" name="Author" /><br /><br />
-        <label id="lbForGenre">Жанр: </label><br />
-        <select name="GenreId">
-            <option value="">Выберите жанр</option>
-            @foreach (var genre in Model)
-        {
-            <option value="@genre.Id">@genre.Title</option>
-    }
-        </select><br /><br />
-        <label id="lbForDate">Год создания: </label><br />
-        <input type="date" id="numDateRealize" name="DateCreating" /><br /><br />
         <input type="submit" value="Создать" />
         <br />
-        <a href="~/Home/ShowBooks">Назад</a>
+        <a asp-controller="Home" asp-action="ShowBooks">Назад</a>
     </form>
 </div>
+@section Footer{
+    @Html.Partial("_ValidationScriptPartialView")
+}
 
 

@@ -41,9 +41,11 @@ namespace TestAppAspCore
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/ServerError");
             }
-            
+
+            app.UseStatusCodePagesWithRedirects("~/Home/ErrorStatusCode/{0}");
+
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

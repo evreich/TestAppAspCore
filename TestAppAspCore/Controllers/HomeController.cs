@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestAppAspCore.DBRepositories;
 using TestAppAspCore.EFCore;
+using TestAppAspCore.ModelHelpers;
+using TestAppAspCore.ViewModels;
 
 namespace TestAppAspCore.Controllers
 {
@@ -19,9 +21,25 @@ namespace TestAppAspCore.Controllers
         }
 
         // GET: Home/ShowBooks
+        [HttpGet]
         public ActionResult ShowBooks()
         {
-            return View(_repository.GetAllBooks());
+            return View(_repository.GetAllBooks().
+                            Select(book => BookConverter.ConvertModelToViewModel(book)).
+                            ToList());
+        }
+
+        [Route("Home/ServerError")]
+        public ActionResult ServerError()
+        {
+            return View();
+        }
+
+        [Route("Home/ErrorStatusCode")]
+        public ActionResult ErrorStatusCode(int id)
+        {
+            ViewBag.ErrorCode = id;
+            return View();
         }
     }
 }

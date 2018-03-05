@@ -1,39 +1,41 @@
-﻿@model IEnumerable<TestAppAspCore.Models.Genre>
+﻿@model TestAppAspCore.ViewModels.ActionBooksPagesViewModel
 @{
     ViewData["Title"] = "Удалить книгу";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var currBook = Model.Book;
 }
 
 <div>
     <h2>Удаление книги</h2>
+    <form asp-controller="Book" asp-action="Delete" asp-antiforgery="true" method="post">
+        <div class="validation" asp-validation-summary="ModelOnly" />
+        <input type="hidden" asp-for="Book.Id" />
+        <div>
+            <label asp-for="Book.Title"></label><br />
+            <input type="text" asp-for="Book.Title" readonly />
+            <span asp-validation-for="Book.Title" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Book.Author"></label><br />
+            <input type="text" asp-for="Book.Author" readonly/>
+            <span asp-validation-for="Book.Author" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Book.GenreTitle"></label><br />
+            <input asp-for="Book.GenreTitle" asp-items="Model.Genres" readonly/>
+            <span asp-validation-for="Book.GenreTitle" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Book.DateCreating"></label><br />
+            <input type="date" asp-for="Book.DateCreating" readonly/>
+            <span asp-validation-for="Book.DateCreating" class="text-danger" ></span>
+        </div>
 
-    <form method="post">
-        <input type="hidden" name="Id" value="@ViewBag.Book.Id" />
-        <label id="lbForTitle">Наименование: </label><br />
-        <input type="text" id="tbTitle" name="Title" readonly value="@ViewBag.Book.Title" /><br /><br />
-        <label id="lbForAuthor">Автор: </label><br />
-        <input type="text" id="tbAuthor" name="Author" readonly value="@ViewBag.Book.Author" /><br /><br />
-        <label id="lbForGenre">Жанр: </label><br />
-        <select name="GenreId" >
-            <option disabled value="">Выберите жанр</option>
-            @foreach (var genre in Model)
-            {
-                if (genre.Id != ViewBag.Book.GenreId)
-                {
-                <option disabled value="@genre.Id">@genre.Title</option>
-                }
-                else
-                {
-                <option selected value="@genre.Id">@genre.Title</option>
-                }
-
-            }
-        </select><br /><br />
-        <label id="lbForDate">Год создания: </label><br />
-        <input type="date" id="numDateRealize" name="DateCreating" readonly value="@ViewBag.Book.DateCreating.ToString("yyy-MM-dd")" /><br /><br />
         <input type="submit" value="Удалить" />
         <br />
-        <a href="~/Home/ShowBooks">Назад</a>
+        <a asp-controller="Home" asp-action="ShowBooks">Назад</a>
     </form>
 </div>
-
+@section Footer{
+    @Html.Partial("_ValidationScriptPartialView")
+}
