@@ -1,5 +1,7 @@
 ﻿window.onload = function () {
-    document.getElementById("createBook").addEventListener("click", () => {
-        window.location = "Book/Create";
-    });
+    if (document.getElementById("createBook")) {
+        document.getElementById("createBook").addEventListener("click", () => {
+            window.location = "Book/Create";
+        });
+    }
 }

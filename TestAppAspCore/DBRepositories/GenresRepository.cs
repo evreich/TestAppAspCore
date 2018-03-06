@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,29 +17,59 @@ namespace TestAppAspCore.DBRepositories
             _context = context;
         }
 
-        public void AddGenres(Genre genre)
+        public void AddGenre(Genre genre)
         {
-            throw new NotImplementedException();
+            _context.Genres.Add(genre);
+            _context.SaveChanges();
         }
 
         public void DeleteGenre(Genre genre)
         {
-            throw new NotImplementedException();
+            _context.Genres.Remove(genre);
+            _context.SaveChanges();
         }
 
         public void EditGenre(Genre genre)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Genre> GetAllGenres()
-        {
-            return _context.Genres.ToList();
+            _context.Genres.Update(genre);
+            _context.SaveChanges();
         }
 
         public Genre GetGenre(int id)
         {
-            throw new NotImplementedException();
+            return _context.Genres.Include(genre => genre.Books).Single(Genre => Genre.Id == id);
         }
+
+        public List<Genre> GetAllGenres()
+        {
+            return _context.Genres.Include(genre => genre.Books).ToList();
+        }
+
+        public List<Book> GetAllBookCurrGenre(int id)
+        {
+            return _context.Genres.Single(genre => genre.Id == id).Books;
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+
     }
 }

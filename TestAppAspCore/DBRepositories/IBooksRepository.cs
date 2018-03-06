@@ -8,7 +8,7 @@ namespace TestAppAspCore.DBRepositories
 {
     public interface IBooksRepository
     {
-        List<Book> GetAllBooks();
+        Task<List<Book>> GetAllBooks();
         Book GetBook(int id);
         void AddBook(Book book);
         void EditBook(Book book);

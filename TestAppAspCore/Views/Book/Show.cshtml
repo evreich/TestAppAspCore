@@ -1,0 +1,39 @@
+﻿@model TestAppAspCore.ViewModels.BookViewModel
+@{
+    ViewData["Title"] = "Show";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form asp-controller="Book" asp-action="Delete" asp-antiforgery="true" method="get">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h2>Описание книги</h2>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label><br />
+                    <input type="text" asp-for="Title" class="form-control" readonly />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Author" class="control-label"></label><br />
+                    <input type="text" asp-for="Author" class="form-control" readonly />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GenreId" class="control-label"></label><br />
+                    <input type="text" asp-for="GenreTitle" class="form-control" readonly />
+                    <span asp-validation-for="GenreId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateCreating" class="control-label"></label><br />
+                    <input type="date" asp-for="DateCreating" class="form-control" readonly />
+                    <span asp-validation-for="DateCreating" class="text-danger"></span>
+                </div>
+
+                <a asp-controller="Home" asp-action="ShowGenres">Назад</a>
+            </div>
+        </div>
+    </div>
+</form>
+

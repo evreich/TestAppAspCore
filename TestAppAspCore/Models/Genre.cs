@@ -1,4 +1,5 @@
-﻿using QPD.DBUpdaters;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using QPD.DBUpdaters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,10 +10,17 @@ namespace TestAppAspCore.Models
 {
     public class Genre: DBModel
     {
-        [Required]
-        [MinLength(2)]
+        [BindRequired]
+        [Required(ErrorMessage = "Ошибка! Пустое значение.")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "Ошибка! Длина строки должна быть от 3 до 20 символов.")]
+        [Display(Name = "Наименование")]
         public string Title { get; set; }
 
         public List<Book> Books { get; set; }
+
+        public Genre()
+        {
+            Books = new List<Book>();
+        }
     }
 }

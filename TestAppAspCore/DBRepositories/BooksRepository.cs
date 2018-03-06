@@ -17,9 +17,9 @@ namespace TestAppAspCore.DBRepositories
             _context = context;
         }
 
-        public List<Book> GetAllBooks()
+        public async Task<List<Book>> GetAllBooks()
         { 
-            return _context.Books.Include(book => book.Genre).ToList();
+            return await _context.Books.Include(book => book.Genre).ToListAsync();
         }
 
         public Book GetBook(int id)
@@ -35,19 +35,13 @@ namespace TestAppAspCore.DBRepositories
 
         public void EditBook(Book book)
         {
-            var currBook = GetBook(book.Id);
-            currBook.Title = book.Title;
-            currBook.Author = book.Author;
-            currBook.GenreId = book.GenreId;
-            currBook.DateCreating = book.DateCreating;
-
-            _context.Books.Update(currBook);
+            _context.Books.Update(book);
             _context.SaveChanges();
         }
 
         public void DeleteBook(Book book)
         {
-            _context.Books.Remove(GetBook(book.Id));
+            _context.Books.Remove(book);
             _context.SaveChanges();
         }
 

@@ -6,34 +6,40 @@
 }
 
 <div>
-    <h2>Удаление книги</h2>
     <form asp-controller="Book" asp-action="Delete" asp-antiforgery="true" method="post">
-        <div class="validation" asp-validation-summary="ModelOnly" />
-        <input type="hidden" asp-for="Book.Id" />
-        <div>
-            <label asp-for="Book.Title"></label><br />
-            <input type="text" asp-for="Book.Title" readonly />
-            <span asp-validation-for="Book.Title" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Book.Author"></label><br />
-            <input type="text" asp-for="Book.Author" readonly/>
-            <span asp-validation-for="Book.Author" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Book.GenreTitle"></label><br />
-            <input asp-for="Book.GenreTitle" asp-items="Model.Genres" readonly/>
-            <span asp-validation-for="Book.GenreTitle" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Book.DateCreating"></label><br />
-            <input type="date" asp-for="Book.DateCreating" readonly/>
-            <span asp-validation-for="Book.DateCreating" class="text-danger" ></span>
-        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h2>Удаление книги</h2>
+                    <div class="validation" asp-validation-summary="ModelOnly" />
+                    <input type="hidden" asp-for="Book.Id" />
+                    <div class="form-group">
+                        <label asp-for="Book.Title" class="control-label"></label><br />
+                        <input type="text" asp-for="Book.Title" class="form-control" readonly />
+                        <span asp-validation-for="Book.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Book.Author" class="control-label"></label><br />
+                        <input type="text" asp-for="Book.Author" class="form-control" readonly />
+                        <span asp-validation-for="Book.Author" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Book.GenreId" class="control-label"></label><br />
+                        <input type="text" asp-for="Book.GenreTitle" class="form-control" readonly />
+                        <span asp-validation-for="Book.GenreId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Book.DateCreating" class="control-label"></label><br />
+                        <input type="date" asp-for="Book.DateCreating" class="form-control" readonly />
+                        <span asp-validation-for="Book.DateCreating" class="text-danger"></span>
+                    </div>
 
-        <input type="submit" value="Удалить" />
-        <br />
-        <a asp-controller="Home" asp-action="ShowBooks">Назад</a>
+                    <input type="submit" value="Удалить" class="btn btn-lg" />
+                    <br /><br />
+                    <a asp-controller="Home" asp-action="ShowBooks">Назад</a>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 @section Footer{

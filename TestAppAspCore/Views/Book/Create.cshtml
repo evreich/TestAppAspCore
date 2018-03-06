@@ -4,35 +4,41 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div>
-    <h2>Создание книги</h2>
-    <form asp-controller="Book" asp-action="Create" asp-antiforgery="true" method="post">
-        <div class="validation" asp-validation-summary="ModelOnly" />
-        <div>
-            <label asp-for="Book.Title"></label><br />
-            <input type="text" asp-for="Book.Title" />
-            <span asp-validation-for="Book.Title" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Book.Author"></label><br />
-            <input type="text" asp-for="Book.Author" />
-            <span asp-validation-for="Book.Author" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Book.GenreId"></label><br />
-            <select asp-for="Book.GenreId" asp-items="Model.Genres">
-                <option selected="selected" value="">Выберите жанр</option>
-            </select>
-            <span asp-validation-for="Book.GenreId" class="text-danger"></span>
-        </div>
-        <div>
-            <label asp-for="Book.DateCreating"></label><br />
-            <input type="date" asp-for="Book.DateCreating" />
-            <span asp-validation-for="Book.DateCreating" class="text-danger"></span>
-        </div>
+    <form asp-controller="Book" asp-action="Create" asp-antiforgery="true" method="post">     
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h2>Создание книги</h2>
+                    <div class="validation" asp-validation-summary="ModelOnly" />
+                    <div class="form-group">
+                        <label asp-for="Book.Title" class="control-label"></label><br />
+                        <input type="text" asp-for="Book.Title" class="form-control" />
+                        <span asp-validation-for="Book.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Book.Author" class="control-label"></label><br />
+                        <input type="text" asp-for="Book.Author" class="form-control" />
+                        <span asp-validation-for="Book.Author" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Book.GenreId" class="control-label"></label><br />
+                        <select asp-for="Book.GenreId" asp-items="Model.Genres" class="custom-select">
+                            <option selected="selected" value="">Выберите жанр</option>
+                        </select>
+                        <span asp-validation-for="Book.GenreId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Book.DateCreating" class="control-label"></label><br />
+                        <input type="date" asp-for="Book.DateCreating" class="form-control" />
+                        <span asp-validation-for="Book.DateCreating" class="text-danger"></span>
+                    </div>
 
-        <input type="submit" value="Создать" />
-        <br />
-        <a asp-controller="Home" asp-action="ShowBooks">Назад</a>
+                    <input type="submit" value="Создать" class="btn btn-lg" />
+                    <br /><br />
+                    <a asp-controller="Home" asp-action="ShowBooks">Назад</a>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 @section Footer{

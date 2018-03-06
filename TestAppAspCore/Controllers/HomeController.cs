@@ -13,20 +13,28 @@ namespace TestAppAspCore.Controllers
 {
     public class HomeController : Controller
     {
-        IBooksRepository _repository;
+        IBooksRepository _booksRepository;
+        IGenresRepository _genresRepository;
 
-        public HomeController(IBooksRepository repository)
+        public HomeController(IBooksRepository booksRepository, IGenresRepository genresRepository)
         {
-            _repository = repository;
+            _genresRepository = genresRepository;
+            _booksRepository = booksRepository;
         }
 
         // GET: Home/ShowBooks
         [HttpGet]
-        public ActionResult ShowBooks()
+        public async Task<IActionResult> ShowBooks()
         {
-            return View(_repository.GetAllBooks().
-                            Select(book => BookConverter.ConvertModelToViewModel(book)).
-                            ToList());
+            var books = await _booksRepository.GetAllBooks();
+            return View(books.Select(book => BookConverter.ConvertModelToViewModel(book)).ToList());
+        }
+
+        // GET: Home/ShowGenres
+        [HttpGet]
+        public IActionResult ShowGenres()
+        {
+            return View(_genresRepository.GetAllGenres().ToList());
         }
 
         [Route("Home/ServerError")]

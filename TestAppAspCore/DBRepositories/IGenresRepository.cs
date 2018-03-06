@@ -10,8 +10,9 @@ namespace TestAppAspCore.DBRepositories
     {
         List<Genre> GetAllGenres();
         Genre GetGenre(int id);
-        void AddGenres(Genre genre);
+        void AddGenre(Genre genre);
         void EditGenre(Genre genre);
         void DeleteGenre(Genre genre);
+        List<Book> GetAllBookCurrGenre(int id);
     }
 }

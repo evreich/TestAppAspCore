@@ -1,0 +1,36 @@
+﻿@model IEnumerable<TestAppAspCore.Models.Genre>
+@{
+    ViewData["Title"] = "Список жанров";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <h2>Список жанров</h2>
+    <table class="table-condensed">
+        <tr>
+            <td>Название</td>
+            <td>Книги</td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var genre in Model)
+        {
+            <tr>
+                <td>@genre.Title</td>
+                <td>
+                @foreach(var book in genre.Books)
+                {
+                    <a asp-controller="Book" asp-action="Show" asp-route-id="@book.Id"><p>@book.Title</p></a>
+                }
+                </td>
+                <td><a asp-controller="Genre" asp-action="Edit" asp-route-id="@genre.Id">Изменить</a></td>
+                <td><a asp-controller="Genre" asp-action="Delete" asp-route-id="@genre.Id">Удалить</a></td>
+            </tr>
+        }
+    </table>
+    <br />
+    <a asp-controller="Genre" asp-action="Create" class="btn active btn-primary" role="button" aria-pressed="true">Создать жанр</a>
+
+</div>
+@section Footer {
+    <script src="~/js/Basic.js" asp-append-version="true"></script>
+}

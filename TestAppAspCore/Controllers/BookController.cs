@@ -108,6 +108,22 @@ namespace TestAppAspCore.Controllers
             }
         }
 
+        // GET: Book/Show/{id}
+        [HttpGet]
+        public ActionResult Show(int id)
+        {
+            try
+            {
+                var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
+
+                return View(book);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+        }
+
         // GET: Book/Delete/{id}
         [HttpGet]
         public ActionResult Delete(int id)

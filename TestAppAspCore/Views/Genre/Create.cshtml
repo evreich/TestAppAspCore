@@ -1,0 +1,28 @@
+﻿@model TestAppAspCore.Models.Genre
+@{
+    ViewData["Title"] = "Создать жанр";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form asp-controller="Genre" asp-action="Create" asp-antiforgery="true" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h2>Создание жанра</h2>
+                <div class="validation" asp-validation-summary="ModelOnly" />
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label><br />
+                    <input type="text" asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                
+                <input type="submit" value="Создать" class="btn btn-lg" />
+                <br /><br />
+                <a asp-controller="Home" asp-action="ShowGenres">Назад</a>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+@section Footer{
+    @Html.Partial("_ValidationScriptPartialView")
+}
