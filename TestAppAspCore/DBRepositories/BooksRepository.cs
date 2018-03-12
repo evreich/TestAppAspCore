@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,35 @@ namespace TestAppAspCore.DBRepositories
             _context = context;
         }
 
-        public async Task<List<Book>> GetAllBooks()
+        public async Task<IEnumerable<Book>> GetAllBooks()
         { 
             return await _context.Books.Include(book => book.Genre).ToListAsync();
         }
+
+        public async Task<IEnumerable<Book>> GetBooksByFilter(string filter, List<Genre> genres)
+        {
+            List<Book> books = new List<Book>();
+            if (genres.FirstOrDefault(genre => genre.Title.ToLower() == filter.ToLower()) != null)
+            {
+                books = await _context.Books.Include(book => book.Genre).Where(book=> book.Genre.Title.ToLower() == filter.ToLower()).ToListAsync();
+            }
+            else if (DateTime.TryParse(filter, out DateTime res))
+            {
+                books = await _context.Books.Include(book => book.Genre).Where(book => book.DateCreating.Year == res.Year).ToListAsync();
+            }
+            else if (int.TryParse(filter, out int bookYear))
+            {
+                books = await _context.Books.Include(book => book.Genre).Where(book => book.DateCreating.Year == bookYear).ToListAsync();
+            }
+            if (!string.IsNullOrEmpty(filter))
+            {
+                books.AddRange(await _context.Books.Include(book => book.Genre).Where(book => book.Title.ToLower().Contains(filter.ToLower()) || 
+                                                                                       book.Author.ToLower().Contains(filter.ToLower())).ToListAsync());
+            }
+
+            return books;  
+        }
+        
 
         public Book GetBook(int id)
         {

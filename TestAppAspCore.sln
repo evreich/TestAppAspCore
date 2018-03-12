@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAppAspCore", "TestAppAspCore\TestAppAspCore.csproj", "{ED18A4CE-0F97-440E-A573-E4EAA559210C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QPD.DBUpdaters", "QPD.DBUpdaters\QPD.DBUpdaters.csproj", "{91CBF6E4-0F20-4FA2-A472-6364F4A832C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QPD.DBUpdaters", "QPD.DBUpdaters\QPD.DBUpdaters.csproj", "{91CBF6E4-0F20-4FA2-A472-6364F4A832C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAppAspCore.Tests", "TestAppAspCore.Tests\TestAppAspCore.Tests.csproj", "{9ECE4871-C254-4A4E-AA4E-B8F449808782}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{91CBF6E4-0F20-4FA2-A472-6364F4A832C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91CBF6E4-0F20-4FA2-A472-6364F4A832C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91CBF6E4-0F20-4FA2-A472-6364F4A832C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ECE4871-C254-4A4E-AA4E-B8F449808782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ECE4871-C254-4A4E-AA4E-B8F449808782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ECE4871-C254-4A4E-AA4E-B8F449808782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ECE4871-C254-4A4E-AA4E-B8F449808782}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

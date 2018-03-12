@@ -40,12 +40,12 @@ namespace TestAppAspCore.DBRepositories
             return _context.Genres.Include(genre => genre.Books).Single(Genre => Genre.Id == id);
         }
 
-        public List<Genre> GetAllGenres()
+        public IEnumerable<Genre> GetAllGenres()
         {
             return _context.Genres.Include(genre => genre.Books).ToList();
         }
 
-        public List<Book> GetAllBookCurrGenre(int id)
+        public IEnumerable<Book> GetAllBookCurrGenre(int id)
         {
             return _context.Genres.Single(genre => genre.Id == id).Books;
         }

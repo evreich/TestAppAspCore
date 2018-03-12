@@ -8,11 +8,11 @@ namespace TestAppAspCore.DBRepositories
 {
     public interface IGenresRepository
     {
-        List<Genre> GetAllGenres();
+        IEnumerable<Genre> GetAllGenres();
         Genre GetGenre(int id);
         void AddGenre(Genre genre);
         void EditGenre(Genre genre);
         void DeleteGenre(Genre genre);
-        List<Book> GetAllBookCurrGenre(int id);
+        IEnumerable<Book> GetAllBookCurrGenre(int id);
     }
 }

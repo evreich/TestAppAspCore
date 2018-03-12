@@ -1,9 +1,18 @@
-﻿@model IEnumerable<TestAppAspCore.ViewModels.BookViewModel>
+﻿@model TestAppAspCore.ViewModels.IndexBookViewModel
 @{
     ViewData["Title"] = "Список книг";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div>
+    <form asp-controller="Home" asp-action="ShowBooks" method="get">
+        <h2>Фильтр</h2>
+        <div class="form-inline form-group">
+            <label for="searchExpr" class="control-label"></label>
+            <input name="searchExpr" id="tbSearchExpr" type="text" class="form-control" />
+            <button id="btnSearch" type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+
     <h2>Список книг</h2>
     <table class="table-condensed">
         <tr>
@@ -14,7 +23,7 @@
             <td></td>
             <td></td>
         </tr>
-        @foreach (var book in Model)
+        @foreach (var book in Model.Books)
         {
             <tr>
                 <td>@book.Title</td>
@@ -28,7 +37,7 @@
     </table>
     <br />
     <button id="createBook" class="btn btn-primary">Создание книги</button>
-    
+
 </div>
 @section Footer {
     <script src="~/js/Basic.js" asp-append-version="true"></script>
