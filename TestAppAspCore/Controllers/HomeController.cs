@@ -27,23 +27,33 @@ namespace TestAppAspCore.Controllers
 
         // GET: Home/ShowBooks
         [HttpGet]
-        public async Task<IActionResult> ShowBooks(string searchExpr, int pageNum)
+        public async Task<IActionResult> ShowBooks(string searchExpr, int? page = 1)
         {
             IEnumerable<Book> books = new List<Book>();
-            if(string.IsNullOrEmpty(searchExpr))
+            IndexBookViewModel indexViewModel;
+            if (string.IsNullOrEmpty(searchExpr))
             {
                 books = await _booksRepository.GetAllBooks();
+
+                indexViewModel = new IndexBookViewModel
+                {
+                    Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * countElemOnPage)
+                            .Take(countElemOnPage).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
+                    PageViewModel = new PageViewModel(books.Count(), page.Value, countElemOnPage, string.Empty)
+                };
+                return View(indexViewModel);
             }
             else
             {
                 books = await _booksRepository.GetBooksByFilter(searchExpr, _genresRepository.GetAllGenres().ToList());
+                indexViewModel = new IndexBookViewModel
+                {
+                    Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * countElemOnPage)
+                            .Take(countElemOnPage).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
+                    PageViewModel = new PageViewModel(books.Count(), page.Value, countElemOnPage, searchExpr)
+                };
+                return View(indexViewModel);
             }
-            var indexViewModel = new IndexBookViewModel
-            {
-                Books = books.Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
-                PageViewModel = new PageViewModel(books.Count(), pageNum, countElemOnPage)
-            };
-            return View(indexViewModel);
         }
 
         // GET: Home/ShowGenres

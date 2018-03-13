@@ -24,12 +24,14 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            var da = HttpContext;
             try
             {
                 return View(new ActionBooksPagesViewModel
                 {
                     Book = null,
-                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title")
+                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title"),
+                    PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
                 });
             }
             catch (Exception)
@@ -42,7 +44,8 @@ namespace TestAppAspCore.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(BookViewModel book)
-        {         
+        {
+
             try
             {
                 if (ModelState.IsValid)
@@ -52,7 +55,12 @@ namespace TestAppAspCore.Controllers
                 }
                 else
                 {
-                    return View(book);
+                    return View(new ActionBooksPagesViewModel
+                    {
+                        Book = book,
+                        Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title"),
+                        PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
+                    });
                 }
             }
             catch(Exception)
@@ -73,7 +81,8 @@ namespace TestAppAspCore.Controllers
                 {
                     Book = book,
                     Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
-                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId))
+                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
+                    PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
                 }); 
             }
             catch (Exception)
@@ -85,7 +94,7 @@ namespace TestAppAspCore.Controllers
         // POST: Book/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(BookViewModel book)
+        public ActionResult Edit(BookViewModel book, string prevPageUrl)
         {
             try
             {
@@ -94,11 +103,17 @@ namespace TestAppAspCore.Controllers
                 if (ModelState.IsValid)
                 {
                     _booksRepository.EditBook(BookConverter.ConvertViewModelToModel(book));
-                    return RedirectToAction(nameof(HomeController.ShowBooks), nameof(HomeController).Replace("Controller", ""));
+                    return Redirect(prevPageUrl);
                 }
                 else
                 {
-                    return View(book);
+                    return View(new ActionBooksPagesViewModel
+                    {
+                        Book = book,
+                        Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
+                        PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
+                    });
                 }
 
             }
@@ -136,7 +151,8 @@ namespace TestAppAspCore.Controllers
                 {
                     Book = book,
                     Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
-                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId))
+                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
+                    PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
                 });
             }
             catch (Exception)
@@ -161,7 +177,13 @@ namespace TestAppAspCore.Controllers
                 }
                 else
                 {
-                    return View(book);
+                    return View(new ActionBooksPagesViewModel
+                    {
+                        Book = book,
+                        Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
+                        PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
+                    });
                 }
             }
             catch (Exception)

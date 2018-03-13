@@ -11,5 +11,6 @@ namespace TestAppAspCore.ViewModels
     {
         public IEnumerable<SelectListItem> Genres { get; set; }
         public BookViewModel Book { get; set; }
+        public string PrevPageUrl { get; set; }
     }
 }

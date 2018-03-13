@@ -23,47 +23,54 @@ namespace TestAppAspCore.Infrastructure
         public ViewContext ViewContext { get; set; }
         public PageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
+        public string PageController { get; set; }       
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             output.TagName = "div";
 
-            // набор ссылок будет представлять список ul
             TagBuilder tag = new TagBuilder("ul");
             tag.AddCssClass("pagination");
+            string symbol;
+            // prevButton
+            symbol = "<";
+            TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, urlHelper, symbol);
+            if (!PageModel.HasPreviousPage)
+            {
+                prevItem.AddCssClass("disabled");
+            }
+            tag.InnerHtml.AppendHtml(prevItem);
 
-            // создаем ссылку на предыдущую страницу, если она есть
-            if (PageModel.HasPreviousPage)
+            // numPages
+            for(int i=1; i<=PageModel.TotalPages; i++)
             {
-                TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, urlHelper);
-                tag.InnerHtml.AppendHtml(prevItem);
+                TagBuilder currentItem = CreateTag(i, urlHelper, i.ToString());               
+                if (i == PageModel.PageNumber)
+                    currentItem.AddCssClass("active");
+                tag.InnerHtml.AppendHtml(currentItem);
             }
-            // формируем три ссылки - на текущую, предыдущую и следующую
-            TagBuilder currentItem = CreateTag(PageModel.PageNumber, urlHelper);
-            tag.InnerHtml.AppendHtml(currentItem);
-            // создаем ссылку на следующую страницу, если она есть
-            if (PageModel.HasNextPage)
+
+            //nextButton
+            symbol = ">";
+            TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, urlHelper, symbol);
+            if (!PageModel.HasNextPage)
             {
-                TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, urlHelper);
-                tag.InnerHtml.AppendHtml(nextItem);
+                nextItem.AddCssClass("disabled");
             }
+            tag.InnerHtml.AppendHtml(nextItem);
             output.Content.AppendHtml(tag);
         }
 
-        TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper)
+        TagBuilder CreateTag(int pageNumber, IUrlHelper urlHelper, string symbol)
         {
             TagBuilder item = new TagBuilder("li");
+            item.AddCssClass("page-item");
             TagBuilder link = new TagBuilder("a");
-            if (pageNumber == PageModel.PageNumber)
-            {
-                item.AddCssClass("active");
-            }
-            else
-            {
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = pageNumber });
-            }
-            link.InnerHtml.Append(pageNumber.ToString());
+            link.AddCssClass("page-link");
+
+            link.Attributes["href"] = urlHelper.Action(PageAction, PageController, new {searchExpr = PageModel.SearchExpr, page = pageNumber });
+            link.InnerHtml.Append(symbol);
             item.InnerHtml.AppendHtml(link);
             return item;
         }

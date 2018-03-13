@@ -8,7 +8,7 @@
         <h2>Фильтр</h2>
         <div class="form-inline form-group">
             <label for="searchExpr" class="control-label"></label>
-            <input name="searchExpr" id="tbSearchExpr" type="text" class="form-control" />
+            <input name="searchExpr" id="tbSearchExpr" type="text" class="form-control" value="@Model.PageViewModel.SearchExpr"/>
             <button id="btnSearch" type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
         </div>
     </form>
@@ -35,6 +35,7 @@
             </tr>
         }
     </table>
+    <page-link page-controller="Home" page-action="ShowBooks" page-model="@Model.PageViewModel"></page-link>
     <br />
     <button id="createBook" class="btn btn-primary">Создание книги</button>
 
