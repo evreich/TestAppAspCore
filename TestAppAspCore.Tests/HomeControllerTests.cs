@@ -102,6 +102,7 @@ namespace TestAppAspCore.Tests
             HomeController controller = new HomeController(mockBooksRepository.Object, mockGenresRepository.Object, 5);
             var controllerResult = (ViewResult) await controller.ShowBooks(null, 2);
             var resBooksOnPage = controllerResult.ViewData.Model as IndexBookViewModel;
+            
             //test PageViewModel
             Assert.NotNull(resBooksOnPage);
             Assert.Equal(2, resBooksOnPage.PageViewModel.PageNumber);

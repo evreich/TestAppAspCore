@@ -10,25 +10,32 @@
     <script src="~/lib/Font-Awesome/svg-with-js/js/fontawesome-all.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse mb-4 navbar-no-padding navbar-custom">
-        <div class="container">
-            <div class="navbar-collapse">
-                <ul>
-                    <li class="nav-item"><a asp-controller="Home" asp-action="ShowBooks" class="nav-link">Список книг</a></li>
-                    <li class="nav-item"><a asp-controller="Home" asp-action="ShowGenres" class="nav-link">Список жанров</a></li>
-                </ul>
-            </div>
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse navbar-custom">
+        <div class="navbar-collapse">
+            <ul>
+                <li class="navbar-brand"><a asp-controller="Home" asp-action="ShowBooks">Books Market</a></li>
+                <li class="nav-item"><a asp-controller="Home" asp-action="ShowBooks" class="nav-link">Список книг</a></li>
+                <li class="nav-item"><a asp-controller="Home" asp-action="ShowGenres" class="nav-link">Список жанров</a></li>
+            </ul>
         </div>
     </nav>
-
-    <br />
-    <div class="container body-content">
-        @RenderBody()
+    <div class="container-fluid" style="height:90%;">
+        <div class="row body-container">
+            <div class="col-2 menu-leftside list-group">
+                <p class="menu-title">Выборка книг по&nbsp;жанрам</p>
+                <a class="list-group-item menu-item" href="#"><i class="fas fa-bookmark"></i> Пункт 1</a>
+                <a class="list-group-item menu-item" href="#"><i class="fas fa-bookmark"></i> Пункт 2</a>
+                <a class="list-group-item menu-item" href="#"><i class="fas fa-bookmark"></i> Пункт 3</a>
+            </div>
+            <div class="container body-content col-10">
+                <br />
+                @RenderBody()
+            </div>
+        </div>
     </div>
-    <hr />
-    <div class="container">
+    <div class="navbar navbar-custom fixed-bottom">
         <footer>
-            <p>©@DateTime.Now.Year - BooksStore</p>
+            <p>©@DateTime.Now.Year - BooksMarket</p>
             <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
                     asp-fallback-src="~/lib/jQuery/dist/jquery.min.js"
                     asp-fallback-test="window.jQuery">
@@ -37,6 +44,6 @@
 
         </footer>
     </div>
-    
+
 </body>
 </html>

@@ -1,5 +1,10 @@
 ﻿body {
     font-family: Arial;
+    height:100%;
+}
+
+html {
+    height: 100%;
 }
 p {
     font-size: 14px;
@@ -12,15 +17,14 @@ tr:first-child{
     border-bottom:2px solid black;
 }
 
-.navbar-no-padding{
-    padding: 0 0 10px 0;
-}
 
-.navbar-custom{
+.navbar-custom {
+    color: cornsilk;
     background: darkolivegreen;
 }
 
 .navbar-custom ul{
+
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -35,15 +39,65 @@ tr:first-child{
     color: cornsilk;
     display: block;
     text-align: center;
-    padding: 14px 16px 5px 0;
     text-decoration: none;
 }
 
-td  p{
+td p{
     margin-bottom: 0;
     font-style: italic;
 }
 
 #btnSearch{
     border-radius: 0 0.25rem 0.25rem 0;
+}
+
+#btnSearch:hover {
+    background-color: grey;
+}
+
+.navbar-brand{
+    margin-right: 75px;
+    font-family: fantasy
+}
+
+.menu-leftside {    
+    background: #e9ecef;
+    padding-right: 0;
+    padding-left: 0;
+}
+.menu-item {
+    background: #e9ecef;
+    font-weight: bold;
+    color: darkolivegreen;
+}
+.menu-item:hover {
+    background: #e9ecef;
+    font-weight: bold;
+    color: darkkhaki;
+}
+
+.menu-title {
+    text-align: center;
+    color: darkolivegreen;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    padding: 0 5px;
+}
+
+.navbar-custom a:hover{
+    color:white;
+}
+
+footer>p {
+    margin-bottom: 0;
+}
+
+.body-container{
+    height:100%;
+}
+
+.searchTextbox{
+    width: 55% !important;
 }

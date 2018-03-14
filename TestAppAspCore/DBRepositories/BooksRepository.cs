@@ -90,5 +90,10 @@ namespace TestAppAspCore.DBRepositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        public IEnumerable<Book> GetBooksByGenre(string genreTitle, List<Genre> genres)
+        {
+            return _context.Books.Include(book => book.Genre).Where(book => book.Genre.Title == genreTitle);
+        }
     }
 }

@@ -51,6 +51,11 @@ namespace TestAppAspCore
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "indexBooksPagination",
+                    template: "ShowBooks/Page/{page}",
+                    defaults: new { controller="Home", action="ShowBooks" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=ShowBooks}/{id?}");
             });
