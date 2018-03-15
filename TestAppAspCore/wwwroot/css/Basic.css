@@ -60,10 +60,11 @@ td p{
     font-family: fantasy
 }
 
-.menu-leftside {    
+.menu-leftside {
     background: #e9ecef;
     padding-right: 0;
     padding-left: 0;
+    height: inherit;
 }
 .menu-item {
     background: #e9ecef;
@@ -95,9 +96,14 @@ footer>p {
 }
 
 .body-container{
-    height:100%;
+    height:auto;
+    padding-bottom:30px;
 }
 
 .searchTextbox{
     width: 55% !important;
+}
+
+.body-content{
+    height:auto;
 }

@@ -29,7 +29,7 @@ namespace TestAppAspCore.Controllers
 
         // GET: Home/ShowBooks
         [HttpGet]
-        public async Task<IActionResult> ShowBooks(string searchExpr, int? page = 1)
+        public async Task<IActionResult> Index(string searchExpr, int? page = 1)
         {
             IEnumerable<Book> books = new List<Book>();
             IndexBookViewModel indexViewModel;

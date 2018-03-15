@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/Basic.css" asp-append-version="true" />
     <link rel="icon" href="~/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="~/lib/Font-Awesome/web-fonts-with-css/css/fontawesome-all.min.css" />
     <script src="~/lib/Font-Awesome/svg-with-js/js/fontawesome-all.js"></script>
 </head>
 <body>
@@ -19,18 +20,9 @@
             </ul>
         </div>
     </nav>
-    <div class="container-fluid" style="height:90%;">
+    <div class="container-fluid">
         <div class="row body-container">
-            <div class="col-2 menu-leftside list-group">
-                <p class="menu-title">Выборка книг по&nbsp;жанрам</p>
-                <a class="list-group-item menu-item" href="#"><i class="fas fa-bookmark"></i> Пункт 1</a>
-                <a class="list-group-item menu-item" href="#"><i class="fas fa-bookmark"></i> Пункт 2</a>
-                <a class="list-group-item menu-item" href="#"><i class="fas fa-bookmark"></i> Пункт 3</a>
-            </div>
-            <div class="container body-content col-10">
-                <br />
-                @RenderBody()
-            </div>
+            @RenderBody()
         </div>
     </div>
     <div class="navbar navbar-custom fixed-bottom">

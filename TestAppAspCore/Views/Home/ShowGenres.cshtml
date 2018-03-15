@@ -3,7 +3,9 @@
     ViewData["Title"] = "Список жанров";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div>
+@Html.Partial("_MenuPartialView")
+<div class="container body-content col-10">
+    <br />
     <h2>Список жанров</h2>
     <table class="table-condensed">
         <tr>
@@ -17,10 +19,10 @@
             <tr>
                 <td>@genre.Title</td>
                 <td>
-                @foreach(var book in genre.Books)
-                {
-                    <a asp-controller="Book" asp-action="Show" asp-route-id="@book.Id"><p>@book.Title</p></a>
-                }
+                    @foreach (var book in genre.Books)
+                    {
+                        <a asp-controller="Book" asp-action="Show" asp-route-id="@book.Id"><p>@book.Title</p></a>
+                    }
                 </td>
                 <td><a asp-controller="Genre" asp-action="Edit" asp-route-id="@genre.Id" class="btn btn-info">Изменить</a></td>
                 <td><a asp-controller="Genre" asp-action="Delete" asp-route-id="@genre.Id" class="btn btn-danger">Удалить</a></td>
@@ -29,7 +31,7 @@
     </table>
     <br />
     <a asp-controller="Genre" asp-action="Create" class="btn btn-success" role="button" aria-pressed="true">Создать жанр</a>
-
+    <br /><br />
 </div>
 @section Footer {
     <script src="~/js/Basic.js" asp-append-version="true"></script>

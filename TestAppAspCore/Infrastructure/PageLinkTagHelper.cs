@@ -23,7 +23,7 @@ namespace TestAppAspCore.Infrastructure
         public ViewContext ViewContext { get; set; }
         public PageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
-        public string PageController { get; set; }       
+        public string PageController { get; set; }  
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {

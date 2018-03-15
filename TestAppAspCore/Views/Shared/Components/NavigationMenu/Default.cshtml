@@ -1,0 +1,12 @@
+﻿@model IEnumerable<Genre>
+
+@foreach (Genre genre in Model)
+{
+    <a class="list-group-item menu-item"
+       asp-action="Index"
+       asp-controller="Home"
+       asp-route-searchExpr="@genre.Title"
+       asp-route-page="1">
+        <i class="fas fa-bookmark"></i> @genre.Title
+    </a>
+} 

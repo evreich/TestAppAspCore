@@ -51,7 +51,7 @@ namespace TestAppAspCore.Controllers
                 if (ModelState.IsValid)
                 {
                     _booksRepository.AddBook(BookConverter.ConvertViewModelToModel(book));
-                    return RedirectToAction(nameof(HomeController.ShowBooks), nameof(HomeController).Replace("Controller", ""));
+                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
                 }
                 else
                 {
@@ -173,7 +173,7 @@ namespace TestAppAspCore.Controllers
                 if (ModelState.IsValid)
                 {
                     _booksRepository.DeleteBook(BookConverter.ConvertViewModelToModel(book));
-                    return RedirectToAction(nameof(HomeController.ShowBooks), nameof(HomeController).Replace("Controller", ""));
+                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
                 }
                 else
                 {

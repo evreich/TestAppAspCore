@@ -1,0 +1,31 @@
+﻿@model TestAppAspCore.ViewModels.IndexBookViewModel
+@{
+    ViewData["Title"] = "Список книг";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("_MenuPartialView")
+<div class="container body-content col-10">
+    <br />
+    <form asp-controller="Home" asp-action="ShowBooks" asp-route-page="1" method="get">
+        <h2>Фильтр</h2>
+        <div class="form-inline form-group">
+            <label for="searchExpr" class="control-label"></label>
+            <input name="searchExpr" id="tbSearchExpr" type="text" class="form-control searchTextbox" value="@Model.PageViewModel.SearchExpr" />
+            <button id="btnSearch" type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+        </div>
+    </form>
+
+    <h2>Список книг</h2>
+    @foreach (var book in Model.Books)
+    {
+        @Html.Partial("_BookCardPartialView", book);
+    }
+    <br />
+    <page-link page-controller="Home" page-action="ShowBooks" page-model="@Model.PageViewModel"></page-link>
+    <button id="createBook" class="btn btn-success">Создание книги</button>
+    <br /><br />
+</div>
+@section Footer {
+    <script src="~/js/Basic.js" asp-append-version="true"></script>
+}

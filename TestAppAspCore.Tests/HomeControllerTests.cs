@@ -100,7 +100,7 @@ namespace TestAppAspCore.Tests
             mockGenresRepository.Setup(m => m.GetAllGenres()).Returns(testGenres);
 
             HomeController controller = new HomeController(mockBooksRepository.Object, mockGenresRepository.Object, 5);
-            var controllerResult = (ViewResult) await controller.ShowBooks(null, 2);
+            var controllerResult = (ViewResult) await controller.Index(null, 2);
             var resBooksOnPage = controllerResult.ViewData.Model as IndexBookViewModel;
             
             //test PageViewModel

@@ -51,13 +51,24 @@ namespace TestAppAspCore
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "indexBooksPagination",
-                    template: "ShowBooks/Page/{page}",
-                    defaults: new { controller="Home", action="ShowBooks" });
+                    name: "userIndexBooksPagination",
+                    template: "{area:exists}/ShowBooks/Page/{page}",
+                    defaults: new { area = "Market" , controller = "Home", action = "ShowBooks" }
+                );
 
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=ShowBooks}/{id?}");
+                    name: "userDefault",
+                    template: "{area:exists}/{controller=Home}/{action=ShowBooks}/{id?}"
+                );
+
+                routes.MapRoute(
+                    name: "adminIndexBooksPagination",
+                    template: "Index/Page/{page}",
+                    defaults: new { controller="Home", action="Index" });
+
+                routes.MapRoute(
+                    name: "adminDefault",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

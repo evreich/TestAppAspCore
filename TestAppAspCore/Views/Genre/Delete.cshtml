@@ -3,27 +3,29 @@
     ViewData["Title"] = "Удалить жанр";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<form asp-controller="Genre" asp-action="Delete" asp-antiforgery="true" method="post">
-    <div class="container">
-        <div class="row">
-            <div class="col-6">
-                <h2>Удаление жанра</h2>
-                <div class="validation" asp-validation-summary="ModelOnly" />
-                <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <label asp-for="Title" class="control-label"></label><br />
-                    <input type="text" asp-for="Title" class="form-control" readonly />
-                    <span asp-validation-for="Title" class="text-danger"></span>
-                </div>
+<div class="container">
+    <br />
+    <form asp-controller="Genre" asp-action="Delete" asp-antiforgery="true" method="post">
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h2>Удаление жанра</h2>
+                    <div class="validation" asp-validation-summary="ModelOnly" />
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="Title" class="control-label"></label><br />
+                        <input type="text" asp-for="Title" class="form-control" readonly />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
 
-                <input type="submit" value="Удалить" class="btn btn-lg" />
-                <br /><br />
-                <a asp-controller="Home" asp-action="ShowGenres">Назад</a>
+                    <input type="submit" value="Удалить" class="btn btn-lg" />
+                    <br /><br />
+                    <a asp-controller="Home" asp-action="ShowGenres">Назад</a>
+                </div>
             </div>
         </div>
-    </div>
-</form>
-
+    </form>
+</div>
 @section Footer{
     @Html.Partial("_ValidationScriptPartialView")
 }
