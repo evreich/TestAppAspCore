@@ -40,6 +40,7 @@ tr:first-child{
     display: block;
     text-align: center;
     text-decoration: none;
+    font-weight: bold;
 }
 
 td p{
@@ -68,12 +69,10 @@ td p{
 }
 .menu-item {
     background: #e9ecef;
-    font-weight: bold;
     color: darkolivegreen;
 }
 .menu-item:hover {
-    background: #e9ecef;
-    font-weight: bold;
+    background-color: rgb(233, 236, 255) ;
     color: darkkhaki;
 }
 
@@ -95,15 +94,34 @@ footer>p {
     margin-bottom: 0;
 }
 
-.body-container{
-    height:auto;
-    padding-bottom:30px;
-}
-
 .searchTextbox{
     width: 55% !important;
 }
 
 .body-content{
-    height:auto;
+    height:inherit;
+}
+
+@media screen and (min-height: 850px){
+    body {
+        overflow-y: hidden;
+    }
+
+    .body-container {
+        height: 100%;
+    }
+
+    .main-container {
+        height: 100%;
+    }
+}
+
+@media screen and (max-height: 850px) {
+    .body-content {
+        margin-bottom: 8%;
+    }
+
+    body {
+        overflow-y: scroll;
+    }
 }

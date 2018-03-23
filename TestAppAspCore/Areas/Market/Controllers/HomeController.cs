@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using TestAppAspCore.Areas.Market.ViewModels;
 using TestAppAspCore.DBRepositories;
 using TestAppAspCore.ModelHelpers;
 using TestAppAspCore.Models;
 using TestAppAspCore.ViewModels;
 
-namespace TestAppAspCore.Areas.User.Controllers
+namespace TestAppAspCore.Areas.Market.Controllers
 {
     [Area("Market")]
     public class HomeController : Controller
@@ -38,7 +39,7 @@ namespace TestAppAspCore.Areas.User.Controllers
                 {
                     Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
                             .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
-                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE, string.Empty)
+                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE)
                 };
                 return View(indexViewModel);
             }
@@ -49,10 +50,27 @@ namespace TestAppAspCore.Areas.User.Controllers
                 {
                     Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
                             .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
-                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE, searchExpr)
+                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
+                    SearchExpr = searchExpr
                 };
                 return View(indexViewModel);
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowBooksByGenre(string genre, int? page = 1)
+        {
+            IEnumerable<Book> books = new List<Book>();
+            ShowBooksViewModel indexViewModel;
+            books = await _booksRepository.GetBooksByGenre(genre);
+            indexViewModel = new ShowBooksViewModel
+            {
+                Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
+                        .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
+                PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
+                Genre = genre
+            };
+            return View(indexViewModel);
         }
     }
 }

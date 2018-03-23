@@ -9,5 +9,6 @@ namespace TestAppAspCore.ViewModels
     {
         public List<BookViewModel> Books { get; set; }
         public PageViewModel PageViewModel { get; set; }
+        public string SearchExpr { get; set; } = "";
     }
 }

@@ -1,15 +1,17 @@
 ﻿
 @{
-    ViewData["Title"] = "Ошибка";
+    ViewData["Title"] = "HTTP ошибка";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<br />
 <h2>Ошибка!</h2>
 <pre>
 
 Возникла ошибка с кодом @ViewBag.ErrorCode.
+Подробную информацию по данной ошибке можно найти по <a href="https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA_%D0%BA%D0%BE%D0%B4%D0%BE%D0%B2_%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F_HTTP#@ViewBag.ErrorCode">ссылке</a>.
 
 Приносим извинения за неудобства!
 
-Пожалуйста, обратитесь в службу поддержки для решения возникшей проблемы.
+Пожалуйста, обратитесь в службу поддержки для решения возникшей проблемы или напишите о проблеме на почту <a href="mailto:m.vlasov@qpdev.ru">m.vlasov@qpdev.ru</a>
+
 </pre>

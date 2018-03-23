@@ -16,5 +16,6 @@ namespace TestAppAspCore.DBRepositories
         void DeleteBook(Book book);
         Task<IEnumerable<Book>> GetBooksByFilter(string filter, List<Genre> genres);
         IEnumerable<Book> GetBooksByGenre(string genreTitle, List<Genre> genres);
+        Task<IEnumerable<Book>> GetBooksByGenre(string genreTitle);
     }
 }

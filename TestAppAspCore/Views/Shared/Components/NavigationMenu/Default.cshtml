@@ -2,11 +2,28 @@
 
 @foreach (Genre genre in Model)
 {
-    <a class="list-group-item menu-item"
-       asp-action="Index"
-       asp-controller="Home"
-       asp-route-searchExpr="@genre.Title"
-       asp-route-page="1">
-        <i class="fas fa-bookmark"></i> @genre.Title
-    </a>
-} 
+    @if (Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
+    {
+        <a class="list-group-item menu-item" style="text-align:center"
+           asp-area="Market"
+           asp-action="ShowBooksByGenre"
+           asp-controller="Home"
+           asp-route-genre="@genre.Title"
+           asp-route-page="1">
+            <i class="fas fa-book"></i> @genre.Title
+        </a>
+
+    }
+
+    else
+    {
+        <a class="list-group-item menu-item" style="text-align:center"
+           asp-action="Index"
+           asp-controller="Home"
+           asp-route-searchExpr="@genre.Title"
+           asp-route-page="1">
+            <i class="fas fa-book"></i> @genre.Title
+        </a>
+    }
+
+}

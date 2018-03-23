@@ -13,17 +13,41 @@
 <body>
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse navbar-custom">
         <div class="navbar-collapse">
-            <ul>
-                <li class="navbar-brand"><a asp-controller="Home" asp-action="ShowBooks">Books Market</a></li>
-                <li class="nav-item"><a asp-controller="Home" asp-action="ShowBooks" class="nav-link">Список книг</a></li>
-                <li class="nav-item"><a asp-controller="Home" asp-action="ShowGenres" class="nav-link">Список жанров</a></li>
+            <ul>          
+                <li class="navbar-brand">
+                    @if (Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
+                    {
+                        <a asp-area="Market"
+                           asp-controller="Home"
+                           asp-action="ShowBooks">
+                            Books Market
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Home"
+                           asp-action="Index">
+                            Books Market
+                        </a>
+                    }
+                </li>
+                 @if (!Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
+                 {
+                    <li class="nav-item">                   
+                        <a asp-controller="Home"
+                           asp-action="Index" 
+                           class="nav-link">
+                            Список книг
+                        </a>                   
+                    </li>
+                    <li class="nav-item"><a asp-controller="Home" asp-action="ShowGenres" class="nav-link">Список жанров</a></li>   
+                 }
+
             </ul>
         </div>
     </nav>
-    <div class="container-fluid">
-        <div class="row body-container">
-            @RenderBody()
-        </div>
+    <div class="container-fluid main-container">
+        @RenderBody()
     </div>
     <div class="navbar navbar-custom fixed-bottom">
         <footer>

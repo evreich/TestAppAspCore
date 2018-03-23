@@ -109,7 +109,7 @@ namespace TestAppAspCore.Tests
             Assert.False(resBooksOnPage.PageViewModel.HasNextPage);
             Assert.True(resBooksOnPage.PageViewModel.HasPreviousPage);
             Assert.Equal(2,resBooksOnPage.PageViewModel.TotalPages);
-            Assert.Empty(resBooksOnPage.PageViewModel.SearchExpr);
+            Assert.Empty(resBooksOnPage.SearchExpr);
 
             //test returning books
             Assert.NotNull(resBooksOnPage.Books);

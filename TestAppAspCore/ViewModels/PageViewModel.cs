@@ -9,13 +9,11 @@ namespace TestAppAspCore.ViewModels
     {
         public int PageNumber { get; }
         public int TotalPages { get; }
-        public string SearchExpr { get; }
 
-        public PageViewModel(int count, int pageNumber, int pageSize, string searchExpr)
+        public PageViewModel(int count, int pageNumber, int pageSize)
         {
             PageNumber = pageNumber;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-            SearchExpr = searchExpr;
         }
 
         public bool HasPreviousPage

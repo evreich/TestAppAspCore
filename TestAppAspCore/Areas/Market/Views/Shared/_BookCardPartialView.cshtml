@@ -1,15 +1,16 @@
 ﻿@model BookViewModel
+<div class="col-sm-6 col-lg-4 p-3">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">
+                @Model.Title
+                <span class="badge badge-pill badge-primary" style="float:right">
+                    <small>@Model.DateCreating.Year</small>
+                </span>
+            </h4>
+            <div class="card-subtitle text-muted">@Model.Author</div>
 
-<div class="card card-outline-primary m-1 p-1">
-    <div class="bg-faded p-1">
-        <h4>
-            @Model.Title
-            @Model.Author
-            @Model.GenreTitle
-            <span class="badge badge-pill badge-primary" style="float:right">
-                <small>@Model.DateCreating</small>
-            </span>
-        </h4>
+            <div class="card-text">@Model.GenreTitle</div>
+        </div>
     </div>
-    <div class="card-text p-1">@Model.Id</div>
 </div>

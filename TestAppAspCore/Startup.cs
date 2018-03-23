@@ -44,15 +44,21 @@ namespace TestAppAspCore
                 app.UseExceptionHandler("/Home/ServerError");
             }
 
-            app.UseStatusCodePagesWithRedirects("/Home/ErrorStatusCode/{0}");
+            app.UseStatusCodePagesWithReExecute("/Home/ErrorStatusCode", "?id={0}");
 
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "userBooksByGenrePagination",
+                    template: "{area:exists}/Books/{genre}/Page/{page:int}",
+                    defaults: new { area = "Market" , controller = "Home", action = "ShowBooksByGenre" }
+                );
+
+                routes.MapRoute(
                     name: "userIndexBooksPagination",
-                    template: "{area:exists}/ShowBooks/Page/{page}",
+                    template: "{area:exists}/Books/Page/{page:int}",
                     defaults: new { area = "Market" , controller = "Home", action = "ShowBooks" }
                 );
 
@@ -62,8 +68,14 @@ namespace TestAppAspCore
                 );
 
                 routes.MapRoute(
+                    name: "adminGenres",
+                    template: "Genres",
+                    defaults: new { controller = "Home", action = "ShowGenres" }
+                );
+
+                routes.MapRoute(
                     name: "adminIndexBooksPagination",
-                    template: "Index/Page/{page}",
+                    template: "Books/Page/{page:int}",
                     defaults: new { controller="Home", action="Index" });
 
                 routes.MapRoute(

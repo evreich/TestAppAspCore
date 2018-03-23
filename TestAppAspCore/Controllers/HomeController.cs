@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestAppAspCore.DBRepositories;
-using TestAppAspCore.EFCore;
 using TestAppAspCore.ModelHelpers;
 using TestAppAspCore.Models;
 using TestAppAspCore.ViewModels;
@@ -27,7 +23,6 @@ namespace TestAppAspCore.Controllers
             COUNT_ELEMS_ON_PAGE = countElemOnPage;
         }
 
-        // GET: Home/ShowBooks
         [HttpGet]
         public async Task<IActionResult> Index(string searchExpr, int? page = 1)
         {
@@ -41,7 +36,7 @@ namespace TestAppAspCore.Controllers
                 {
                     Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
                             .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
-                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE, string.Empty)
+                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
                 };
                 return View(indexViewModel);
             }
@@ -52,7 +47,8 @@ namespace TestAppAspCore.Controllers
                 {
                     Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
                             .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
-                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE, searchExpr)
+                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
+                    SearchExpr = searchExpr
                 };
                 return View(indexViewModel);
             }

@@ -23,7 +23,10 @@ namespace TestAppAspCore.Infrastructure
         public ViewContext ViewContext { get; set; }
         public PageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
-        public string PageController { get; set; }  
+        public string PageController { get; set; }
+
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -69,7 +72,8 @@ namespace TestAppAspCore.Infrastructure
             TagBuilder link = new TagBuilder("a");
             link.AddCssClass("page-link");
 
-            link.Attributes["href"] = urlHelper.Action(PageAction, PageController, new {searchExpr = PageModel.SearchExpr, page = pageNumber });
+            PageUrlValues["page"] = pageNumber;
+            link.Attributes["href"] = urlHelper.Action(PageAction, PageController, PageUrlValues);
             link.InnerHtml.Append(symbol);
             item.InnerHtml.AppendHtml(link);
             return item;

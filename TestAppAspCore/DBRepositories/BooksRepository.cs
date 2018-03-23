@@ -23,6 +23,11 @@ namespace TestAppAspCore.DBRepositories
             return await _context.Books.Include(book => book.Genre).ToListAsync();
         }
 
+        public async Task<IEnumerable<Book>> GetBooksByGenre(string genreTitle)
+        {
+            return await _context.Books.Include(book => book.Genre).Where(book => book.Genre.Title.ToLower() == genreTitle.ToLower()).ToListAsync();
+        }
+
         public async Task<IEnumerable<Book>> GetBooksByFilter(string filter, List<Genre> genres)
         {
             List<Book> books = new List<Book>();

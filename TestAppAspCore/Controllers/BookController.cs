@@ -45,7 +45,6 @@ namespace TestAppAspCore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(BookViewModel book)
         {
-
             try
             {
                 if (ModelState.IsValid)
