@@ -13,7 +13,7 @@ td{
     padding: 5px;
 }
 
-tr:first-child{
+.table-condensed tr:first-child {
     border-bottom:2px solid black;
 }
 
@@ -65,14 +65,16 @@ td p{
     background: #e9ecef;
     padding-right: 0;
     padding-left: 0;
-    height: inherit;
+    height: 100%;
+    position: fixed;
 }
 .menu-item {
     background: #e9ecef;
     color: darkolivegreen;
 }
-.menu-item:hover {
-    background-color: rgb(233, 236, 255) ;
+
+.menu-item-selected, .menu-item:hover {
+    background-color: rgb(233, 236, 255);
     color: darkkhaki;
 }
 

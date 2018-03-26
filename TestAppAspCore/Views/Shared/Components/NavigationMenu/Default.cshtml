@@ -4,7 +4,8 @@
 {
     @if (Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
     {
-        <a class="list-group-item menu-item" style="text-align:center"
+        <a class="list-group-item menu-item @(genre.Title == ViewBag.SelectedGenre ? "menu-item-selected" : string.Empty)"            
+           style="text-align:center"
            asp-area="Market"
            asp-action="ShowBooksByGenre"
            asp-controller="Home"
@@ -17,7 +18,8 @@
 
     else
     {
-        <a class="list-group-item menu-item" style="text-align:center"
+        <a class="list-group-item menu-item"           
+           style="text-align:center"
            asp-action="Index"
            asp-controller="Home"
            asp-route-searchExpr="@genre.Title"

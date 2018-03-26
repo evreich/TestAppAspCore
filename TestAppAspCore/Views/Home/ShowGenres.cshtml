@@ -5,15 +5,15 @@
 }
 <div class="row body-container">
     @Html.Partial("_MenuPartialView")
-    <div class="container body-content col-10 col-md-10 col-sm-9">
+    <div class="container body-content col-10 col-md-10 col-sm-9 offset-sm-3 offset-md-2">
         <br />
         <h2>Список жанров</h2>
         <table class="table-condensed">
             <tr>
-                <td>Название</td>
-                <td>Книги</td>
-                <td></td>
-                <td></td>
+                <th class="text-center">Название</th>
+                <th class="text-center">Книги</th>
+                <th></th>
+                <th></th>
             </tr>
             @foreach (var genre in Model)
             {

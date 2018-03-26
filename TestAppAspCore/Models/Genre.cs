@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
 using QPD.DBUpdaters;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace TestAppAspCore.Models
         [Display(Name = "Наименование")]
         public string Title { get; set; }
 
+        [JsonIgnore]
         public List<Book> Books { get; set; }
 
         public Genre()

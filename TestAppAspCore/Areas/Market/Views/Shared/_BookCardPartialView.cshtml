@@ -1,16 +1,32 @@
 ﻿@model BookViewModel
+
 <div class="col-sm-6 col-lg-4 p-3">
     <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">
+        <div class="card-header">
+            <h4>
                 @Model.Title
                 <span class="badge badge-pill badge-primary" style="float:right">
                     <small>@Model.DateCreating.Year</small>
                 </span>
             </h4>
-            <div class="card-subtitle text-muted">@Model.Author</div>
-
-            <div class="card-text">@Model.GenreTitle</div>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Author</h5>
+            <div>
+                <div class="card-subtitle text-muted" style="float:left">
+                    @Model.GenreTitle
+                </div>
+                
+                <form asp-area="Market" asp-action="AddToCart" asp-controller="Cart" method="post" style="float:right">
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+                    <span class="card-text p-1">
+                        <button type="submit" class="btn btn-success btn-sm pull-right" style="float:right">
+                            Взять
+                        </button>
+                    </span>
+                </form>
+            </div>
         </div>
     </div>
 </div>

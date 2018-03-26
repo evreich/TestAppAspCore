@@ -1,0 +1,51 @@
+﻿@model CartIndexViewModel
+@{
+    ViewData["Title"] = "Корзина";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row body-container">
+    <div class="container">
+        <br />
+        <h2>Корзина</h2>
+        <br />
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Название книги</th>
+                    <th>Жанр</th>
+                    <th>Количество</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var line in Model.Cart.Lines)
+                {
+                    <tr>
+                        <td class="text-center">@line.Book.Title</td>
+                        <td class="text-center">@line.Book.Genre.Title</td>
+                        <td class="text-center">@line.Count</td>
+                        <td>
+                            <form asp-area="Market" asp-action="RemoveFromCart" asp-controller="Cart" method="post">
+                                <input type="hidden" name="Id" value="@line.Book.Id" />
+                                <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+                                <button class="btn btn-danger btn-block" asp-controller="Cart" asp-action="RemoveFromCart">Удалить</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right"><b>Всего:</b></td>
+                    <td class="text-right">
+                        <b>@Model.Cart.ComputeTotalValue().ToString("")</b>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="text-center">
+            <a class="btn btn-primary" href="@Model.ReturnUrl">Продолжить просмотр BookMarket</a>
+        </div>
+    </div>
+</div>

@@ -68,9 +68,9 @@ namespace TestAppAspCore.Controllers
         }
 
         [Route("Home/ErrorStatusCode")]
-        public ActionResult ErrorStatusCode(int id)
+        public ActionResult ErrorStatusCode(int code)
         {
-            ViewBag.ErrorCode = id;
+            ViewBag.ErrorCode = code;
             return View();
         }
     }

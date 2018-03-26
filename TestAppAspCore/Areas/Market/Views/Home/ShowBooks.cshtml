@@ -6,7 +6,7 @@
 
 <div class="row body-container">
     @Html.Partial("_MenuPartialView")
-    <div class="container body-content col-sm-9 col-md-10 col-10">
+    <div class="container body-content col-sm-9 col-md-10 col-10 offset-sm-3 offset-md-2">
         <br />
         <form asp-controller="Home" asp-action="ShowBooks" asp-route-page="1" method="get">
             <h2>Фильтр</h2>

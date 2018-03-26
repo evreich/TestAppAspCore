@@ -17,6 +17,7 @@ namespace TestAppAspCore.Components
         }
         public IViewComponentResult Invoke()
         {
+            ViewBag.SelectedGenre = RouteData?.Values["genre"];
             return View(repository.GetAllGenres().OrderBy(genre => genre.Title));
         }
     }

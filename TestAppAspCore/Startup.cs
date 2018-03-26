@@ -30,6 +30,8 @@ namespace TestAppAspCore
             services.AddScoped<IGenresRepository, GenresRepository>();
             services.AddDbContext<BooksContext>(options => options.UseSqlServer(connection));
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -44,9 +46,11 @@ namespace TestAppAspCore
                 app.UseExceptionHandler("/Home/ServerError");
             }
 
-            app.UseStatusCodePagesWithReExecute("/Home/ErrorStatusCode", "?id={0}");
+            app.UseStatusCodePagesWithReExecute("/Home/ErrorStatusCode", "?code={0}");
 
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
