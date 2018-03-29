@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TestAppAspCore.DBRepositories;
 using TestAppAspCore.EFCore;
+using TestAppAspCore.Models;
 
 namespace TestAppAspCore
 {
@@ -24,11 +26,26 @@ namespace TestAppAspCore
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
+            string defaultConnection = Configuration.GetConnectionString("DefaultConnection");
+            string identityConnection = Configuration.GetConnectionString("IdentityConnection");
+
             services.AddLogging();
+            services.AddDbContext<BooksContext>(options => options.UseSqlServer(defaultConnection));
+            services.AddDbContext<IdentityContext>(options => options.UseSqlServer(identityConnection));
+            services.AddIdentity<User, IdentityRole>(opts =>
+            {
+                opts.Password.RequiredLength = 5; 
+                opts.Password.RequireNonAlphanumeric = false;   
+                opts.Password.RequireLowercase = false; 
+                opts.Password.RequireUppercase = false; 
+                opts.Password.RequireDigit = true;
+            }).AddEntityFrameworkStores<IdentityContext>();
+
             services.AddScoped<IBooksRepository, BooksRepository>();
             services.AddScoped<IGenresRepository, GenresRepository>();
-            services.AddDbContext<BooksContext>(options => options.UseSqlServer(connection));
+
+            services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();
@@ -45,12 +62,11 @@ namespace TestAppAspCore
             {
                 app.UseExceptionHandler("/Home/ServerError");
             }
-
             app.UseStatusCodePagesWithReExecute("/Home/ErrorStatusCode", "?code={0}");
 
             app.UseStaticFiles();
-
             app.UseSession();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

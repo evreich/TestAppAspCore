@@ -9,6 +9,7 @@
     @Html.Partial("_MenuPartialView")
     <div class="container body-content col-sm-9 col-md-10 offset-sm-3 offset-md-2 ">
         <br />
+
         <form asp-controller="Home" asp-action="Index" asp-route-page="1" method="get">
             <h2>Фильтр</h2>
             <div class="form-inline form-group">
@@ -17,7 +18,10 @@
                 <button id="btnSearch" type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
             </div>
         </form>
-
+        @if (TempData["message"] != null)
+        {
+            <div id="alert-closing" class="alert alert-success">@TempData["message"]</div>
+        }
         <h2>Список книг</h2>
         <table class="table-condensed">
             <tr>
@@ -28,22 +32,22 @@
                 <th class="text-center">Действия</th>
             </tr>
             @foreach (var book in Model.Books)
-            {
-                <tr>
-                    <td>@book.Title</td>
-                    <td>@book.Author</td>
-                    <td>@book.GenreTitle</td>
-                    <td>@book.DateCreating.Year</td>
-                    <td>
-                        <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-info" style="padding-right:10px;">Изменить</a>
-                        <a asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger">Удалить</a>
-                    </td>
-                </tr>
-            }
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.Author</td>
+                <td>@book.GenreTitle</td>
+                <td>@book.DateCreating.Year</td>
+                <td>
+                    <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-info" style="padding-right:10px;">Изменить</a>
+                    <a asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger">Удалить</a>
+                </td>
+            </tr>
+    }
         </table>
         <br />
         <page-link page-controller="Home" page-action="Index" page-model="@Model.PageViewModel" page-url-searchExpr="@Model.SearchExpr"></page-link>
-        <button id="createBook" class="btn btn-success">Создание книги</button>
+        <a asp-controller="Book" asp-action="Create" class="btn btn-success">Создание книги</a>
         <br /><br />
     </div>
 </div>   

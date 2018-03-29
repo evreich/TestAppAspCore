@@ -24,47 +24,33 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var da = HttpContext;
-            try
+            return View(new ActionBooksPagesViewModel
             {
-                return View(new ActionBooksPagesViewModel
-                {
-                    Book = null,
-                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title"),
-                    PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
-                });
-            }
-            catch (Exception)
-            {
-                return View();
-            }
+                Book = null,
+                Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title"),
+                PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
+            });
         }
 
         // POST: Book/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BookViewModel book)
+        public ActionResult Create(BookViewModel book, string prevPageUrl)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    _booksRepository.AddBook(BookConverter.ConvertViewModelToModel(book));
-                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
-                }
-                else
-                {
-                    return View(new ActionBooksPagesViewModel
-                    {
-                        Book = book,
-                        Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title"),
-                        PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
-                    });
-                }
+                _booksRepository.AddBook(BookConverter.ConvertViewModelToModel(book));
+                TempData["message"] = $"Книга \"{book.Title}\" успешно добавлена";
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
             }
-            catch(Exception)
+            else
             {
-                return View();
+                return View(new ActionBooksPagesViewModel
+                {
+                    Book = book,
+                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title"),
+                    PrevPageUrl = prevPageUrl
+                });
             }
         }
 
@@ -72,22 +58,15 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            try
-            {
-                var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
+            var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
 
-                return View(new ActionBooksPagesViewModel
-                {
-                    Book = book,
-                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
-                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
-                    PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
-                }); 
-            }
-            catch (Exception)
+            return View(new ActionBooksPagesViewModel
             {
-                return View();
-            }
+                Book = book,
+                Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                                        _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
+                PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
+            }); 
         }
 
         // POST: Book/Edit/
@@ -95,30 +74,23 @@ namespace TestAppAspCore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(BookViewModel book, string prevPageUrl)
         {
-            try
+            if (book.Id <= 0)
+                throw new ArgumentException("Book ID is empty or <= 0");
+            if (ModelState.IsValid)
             {
-                if (book.Id <= 0)
-                    throw new ArgumentException("Book ID is empty or <= 0");
-                if (ModelState.IsValid)
-                {
-                    _booksRepository.EditBook(BookConverter.ConvertViewModelToModel(book));
-                    return Redirect(prevPageUrl);
-                }
-                else
-                {
-                    return View(new ActionBooksPagesViewModel
-                    {
-                        Book = book,
-                        Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
-                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
-                        PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
-                    });
-                }
-
+                _booksRepository.EditBook(BookConverter.ConvertViewModelToModel(book));
+                TempData["message"] = $"Книга \"{book.Title}\" успешно изменена";
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
             }
-            catch (Exception)
+            else
             {
-                return View();
+                return View(new ActionBooksPagesViewModel
+                {
+                    Book = book,
+                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                                        _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
+                    PrevPageUrl = prevPageUrl
+                });
             }
         }
 
@@ -126,68 +98,48 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Show(int id)
         {
-            try
-            {
-                var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
+            var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
 
-                return View(book);
-            }
-            catch (Exception)
-            {
-                return View();
-            }
+            return View(book);
         }
 
         // GET: Book/Delete/{id}
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            try
-            {
-                var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
+            var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
 
-                return View(new ActionBooksPagesViewModel
-                {
-                    Book = book,
-                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
-                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
-                    PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
-                });
-            }
-            catch (Exception)
+            return View(new ActionBooksPagesViewModel
             {
-                return View();
-            }
+                Book = book,
+                Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                                        _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
+                PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
+            });
         }
 
         // POST: Book/Delete/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(BookViewModel book)
+        public ActionResult Delete(BookViewModel book, string prevPageUrl)
         {
-            try
+            if (book.Id <= 0)
+                throw new ArgumentException("Book ID is empty or <= 0");
+            if (ModelState.IsValid)
             {
-                if (book.Id <= 0)
-                    throw new ArgumentException("Book ID is empty or <= 0");
-                if (ModelState.IsValid)
-                {
-                    _booksRepository.DeleteBook(BookConverter.ConvertViewModelToModel(book));
-                    return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
-                }
-                else
-                {
-                    return View(new ActionBooksPagesViewModel
-                    {
-                        Book = book,
-                        Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
-                                            _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
-                        PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
-                    });
-                }
+                _booksRepository.DeleteBook(BookConverter.ConvertViewModelToModel(book));
+                TempData["message"] = $"Книга \"{book.Title}\" успешно удалена";
+                return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
             }
-            catch (Exception)
+            else
             {
-                return View();
+                return View(new ActionBooksPagesViewModel
+                {
+                    Book = book,
+                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                                        _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
+                    PrevPageUrl = prevPageUrl
+                });
             }
         }
     }

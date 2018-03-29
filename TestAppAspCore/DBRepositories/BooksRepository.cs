@@ -33,7 +33,11 @@ namespace TestAppAspCore.DBRepositories
             List<Book> books = new List<Book>();
             if (genres.FirstOrDefault(genre => genre.Title.ToLower() == filter.ToLower()) != null)
             {
-                books = await _context.Books.Include(book => book.Genre).Where(book=> book.Genre.Title.ToLower() == filter.ToLower()).ToListAsync();
+                books = await _context
+                    .Books
+                    .Include(book => book.Genre)
+                    .Where(book=> book.Genre.Title.ToLower() == filter.ToLower())
+                    .ToListAsync();
             }
             else if (DateTime.TryParse(filter, out DateTime res))
             {

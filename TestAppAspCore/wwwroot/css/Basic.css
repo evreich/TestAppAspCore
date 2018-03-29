@@ -1,6 +1,5 @@
 ﻿body {
     font-family: Arial;
-    height:100%;
 }
 
 html {
@@ -103,27 +102,15 @@ footer>p {
 .body-content{
     height:inherit;
 }
-
-@media screen and (min-height: 850px){
+/*
+@media screen and (min-weight: 1200px) {
     body {
-        overflow-y: hidden;
-    }
-
-    .body-container {
-        height: 100%;
-    }
-
-    .main-container {
-        height: 100%;
+        overflow-y: no-display;
     }
 }
 
-@media screen and (max-height: 850px) {
-    .body-content {
-        margin-bottom: 8%;
-    }
-
+@media screen and (max-weight: 1200px) {
     body {
         overflow-y: scroll;
     }
-}
+}*/

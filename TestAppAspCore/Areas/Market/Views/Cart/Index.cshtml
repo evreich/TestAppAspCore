@@ -30,7 +30,6 @@
                                 <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
                                 <button class="btn btn-danger btn-block" asp-controller="Cart" asp-action="RemoveFromCart">Удалить</button>
                             </form>
-
                         </td>
                     </tr>
                 }
@@ -46,6 +45,11 @@
         </table>
         <div class="text-center">
             <a class="btn btn-primary" href="@Model.ReturnUrl">Продолжить просмотр BookMarket</a>
+            <a class="btn btn-primary 
+               @(@Model.Cart.ComputeTotalValue()==0 ? "disabled" :string.Empty)" 
+               asp-controller="Order" asp-action="Checkout">
+                Оформить заказ
+            </a>
         </div>
     </div>
 </div>

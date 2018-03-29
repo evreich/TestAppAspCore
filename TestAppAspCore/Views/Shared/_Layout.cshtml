@@ -11,42 +11,34 @@
     <script src="~/lib/Font-Awesome/svg-with-js/js/fontawesome-all.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse navbar-custom">
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse navbar-custom fixed-top">
         <div class="navbar-collapse">
-            <ul>          
-                <li class="navbar-brand">
+            <div class="row">
+                <div class="col-9">
+                    <ul>                            
+                        @if (Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
+                        {
+                            <li class="navbar-brand"><a asp-area="Market" asp-controller="Home" asp-action="ShowBooks">Books Market</a></li>
+                        }
+                        else
+                        {
+                            <li class="navbar-brand"><a asp-controller="Home" asp-action="Index">Books Market</a></li>
+                            <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link">Список книг</a></li>
+                            <li class="nav-item"><a asp-controller="Home" asp-action="ShowGenres" class="nav-link">Список жанров</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="col-3">
                     @if (Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
                     {
-                        <a asp-area="Market"
-                           asp-controller="Home"
-                           asp-action="ShowBooks">
-                            Books Market
-                        </a>
+                        @await Component.InvokeAsync("CartSummary") 
                     }
-                    else
-                    {
-                        <a asp-controller="Home"
-                           asp-action="Index">
-                            Books Market
-                        </a>
-                    }
-                </li>
-                 @if (!Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
-                 {
-                    <li class="nav-item">                   
-                        <a asp-controller="Home"
-                           asp-action="Index" 
-                           class="nav-link">
-                            Список книг
-                        </a>                   
-                    </li>
-                    <li class="nav-item"><a asp-controller="Home" asp-action="ShowGenres" class="nav-link">Список жанров</a></li>   
-                 }
-
-            </ul>
+                    
+                </div>
+            </div>
         </div>
     </nav>
-    <div class="container-fluid main-container">
+    <div class="container-fluid main-container mt-5">
         @RenderBody()
     </div>
     <div class="navbar navbar-custom fixed-bottom">

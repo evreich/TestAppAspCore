@@ -33,7 +33,7 @@
                         <input type="date" asp-for="Book.DateCreating" class="form-control" />
                         <span asp-validation-for="Book.DateCreating" class="text-danger"></span>
                     </div>
-
+                    <input name="prevPageUrl" type="hidden" value="@Model.PrevPageUrl" />
                     <input type="submit" value="Создать" class="btn btn-lg" />
                     <br /><br />
                     <a href="@Model.PrevPageUrl">Назад</a>

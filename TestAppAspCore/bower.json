@@ -6,6 +6,7 @@
     "jQuery": "3.3.1",
     "jquery-validation": "1.17.0",
     "jquery-validation-unobtrusive": "v3.2.6",
-    "Font-Awesome": "~5.0.8"
+    "Font-Awesome": "~5.0.8",
+    "jquery-ajax-unobtrusive": "v3.2.4"
   }
 }

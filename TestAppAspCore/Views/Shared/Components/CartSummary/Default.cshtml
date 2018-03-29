@@ -1,0 +1,15 @@
+﻿@model Cart
+<div class="float-right w-25">
+    <a class="btn btn-sm btn-success navbar-btn m-1 @(Context.Request.Path.ToString().Contains("Cart/Index") ? "disabled" : string.Empty)"
+       asp-area="Market" asp-controller="Cart" asp-action="Index"
+       asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
+        <i class="fa fa-shopping-bag"></i>
+    </a>
+</div>
+<div class="text-right float-right mr-2 mt-1">
+    <small class="navbar-text font-weight-bold">
+        <b>Кол-во книг:</b> <span id="countBooks">@Model.ComputeTotalValue().ToString()</span>
+    </small>
+</div>
+
+

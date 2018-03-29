@@ -8,7 +8,7 @@ namespace TestAppAspCore.Models
     public class Cart
     {
         private List<CartLine> lineCollection = new List<CartLine>();
-        public virtual void AddItem(Book book, int count)
+        public virtual void AddItem(Book book)
         {
             CartLine line = lineCollection.Where(p => p.Id == book.Id).FirstOrDefault();
 
@@ -19,18 +19,18 @@ namespace TestAppAspCore.Models
                     {
                         Id = book.Id,
                         Book = book,
-                        Count = count
+                        Count = 1
                     }
                 );
             }
             else
             {
-                line.Count += count;
+                line.Count ++;
             }
         }
 
         public virtual void RemoveLine(Book book) => lineCollection.RemoveAll(l => l.Book.Id == book.Id);
-        public virtual int ComputeTotalValue() => lineCollection.Count;
+        public virtual int ComputeTotalValue() => lineCollection.Sum(line => line.Count);
         public virtual void Clear() => lineCollection.Clear();
         public virtual IEnumerable<CartLine> Lines => lineCollection;
     }

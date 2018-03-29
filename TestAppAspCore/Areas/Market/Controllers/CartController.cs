@@ -7,16 +7,20 @@ using TestAppAspCore.DBRepositories;
 using TestAppAspCore.Models;
 using TestAppAspCore.Infrastructure;
 using TestAppAspCore.ViewModels;
+using TestAppAspCore.Areas.Market.ViewModels;
 
 namespace TestAppAspCore.Areas.Market.Controllers
 {
     [Area("Market")]
     public class CartController : Controller
     {
-        private IBooksRepository repository;
-        public CartController(IBooksRepository repo)
+        private IBooksRepository _repository;
+        private Cart _cart;
+
+        public CartController(IBooksRepository repo, Cart cartService)
         {
-            repository = repo;
+            _repository = repo;
+            _cart = cartService;
         }
 
         [HttpGet]
@@ -24,47 +28,31 @@ namespace TestAppAspCore.Areas.Market.Controllers
         {
             return View(new CartIndexViewModel
             {
-                Cart = GetCart(),
+                Cart = _cart,
                 ReturnUrl = returnUrl
             });
         }
 
-        [ValidateAntiForgeryToken]
         [HttpPost]
-        public RedirectToActionResult AddToCart(int Id, string returnUrl)
+        public IActionResult AddToCart(int Id, string returnUrl)
         {
-            Book book = repository.GetBook(Id);
+            Book book = _repository.GetBook(Id);
             if (book != null)
             {
-                Cart cart = GetCart();
-                cart.AddItem(book, 1);
-                SaveCart(cart);
+                _cart.AddItem(book);
             }
-            return RedirectToAction(nameof(this.Index), new { returnUrl });
+            return Json(new { bookTitle = book.Title, countBooks = _cart.ComputeTotalValue() });
         }
 
         [HttpPost]
         public RedirectToActionResult RemoveFromCart(int Id, string returnUrl)
         {
-            Book book = repository.GetBook(Id);
+            Book book = _repository.GetBook(Id);
             if (book != null)
-            {
-                Cart cart = GetCart();
-                cart.RemoveLine(book);
-                SaveCart(cart);
+            {              
+                _cart.RemoveLine(book);
             }
             return RedirectToAction(nameof(this.Index), new { returnUrl });
-        }
-
-        private Cart GetCart()
-        {
-            Cart cart = HttpContext.Session.GetJson<Cart>("Cart") ?? new Cart();
-            return cart;
-        }
-
-        private void SaveCart(Cart cart)
-        {
-            HttpContext.Session.SetJson("Cart", cart);
         }
     }
 }

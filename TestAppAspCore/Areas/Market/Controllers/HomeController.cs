@@ -19,7 +19,7 @@ namespace TestAppAspCore.Areas.Market.Controllers
         IBooksRepository _booksRepository;
         IGenresRepository _genresRepository;
 
-        public HomeController(IBooksRepository booksRepository, IGenresRepository genresRepository, int countElemOnPage = 5)
+        public HomeController(IBooksRepository booksRepository, IGenresRepository genresRepository, int countElemOnPage = 8)
         {
             _genresRepository = genresRepository;
             _booksRepository = booksRepository;
@@ -30,28 +30,30 @@ namespace TestAppAspCore.Areas.Market.Controllers
         public async Task<IActionResult> ShowBooks(string searchExpr, int? page = 1)
         {
             IEnumerable<Book> books = new List<Book>();
-            IndexBookViewModel indexViewModel;
+            ShowBooksViewModel indexViewModel;
             if (string.IsNullOrEmpty(searchExpr))
             {
                 books = await _booksRepository.GetAllBooks();
 
-                indexViewModel = new IndexBookViewModel
+                indexViewModel = new ShowBooksViewModel
                 {
                     Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
                             .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
-                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE)
+                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
+                    ActionName = nameof(this.ShowBooks)
                 };
                 return View(indexViewModel);
             }
             else
             {
                 books = await _booksRepository.GetBooksByFilter(searchExpr, _genresRepository.GetAllGenres().ToList());
-                indexViewModel = new IndexBookViewModel
+                indexViewModel = new ShowBooksViewModel
                 {
                     Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
                             .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
                     PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
-                    SearchExpr = searchExpr
+                    SearchExpr = searchExpr,
+                    ActionName = nameof(this.ShowBooks)
                 };
                 return View(indexViewModel);
             }
@@ -68,9 +70,10 @@ namespace TestAppAspCore.Areas.Market.Controllers
                 Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
                         .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
                 PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
-                Genre = genre
+                Genre = genre,
+                ActionName = nameof(this.ShowBooksByGenre)
             };
-            return View(indexViewModel);
+            return View(nameof(ShowBooks),indexViewModel);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IndexBookViewModel
+﻿@model ShowBooksViewModel
 @{
     ViewData["Title"] = "Список книг";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,6 +8,13 @@
     @Html.Partial("_MenuPartialView")
     <div class="container body-content col-sm-9 col-md-10 col-10 offset-sm-3 offset-md-2">
         <br />
+        <div id="messageBox">
+            @if (TempData["orderID"] != null)
+            {
+                <div id="alert-closing" class="alert alert-success">Заказ <b>@TempData["orderID"]</b> успешно принят и отправлен на рассмотрение менеджеру!</div>
+            }
+        </div>
+
         <form asp-controller="Home" asp-action="ShowBooks" asp-route-page="1" method="get">
             <h2>Фильтр</h2>
             <div class="form-inline form-group">
@@ -28,10 +35,12 @@
         </div>
 
         <br />
-        <page-link page-controller="Home" page-action="ShowBooks" page-model="@Model.PageViewModel" page-url-searchExpr="@Model.SearchExpr"></page-link>
+        <page-link page-controller="Home" page-action="@Model.ActionName" page-model="@Model.PageViewModel" page-url-searchExpr="@Model.SearchExpr"></page-link>
         <br /><br />
     </div>
 </div>
+
 @section Footer {
     <script src="~/js/Basic.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
 }

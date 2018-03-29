@@ -30,21 +30,15 @@ namespace TestAppAspCore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Genre genre)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    _genresRepository.AddGenre(new Genre { Title = genre.Title });
-                    return RedirectToAction(nameof(HomeController.ShowGenres), nameof(HomeController).Replace("Controller", ""));
-                }
-                else
-                {
-                    return View(genre);
-                }
+                _genresRepository.AddGenre(new Genre { Title = genre.Title });
+                TempData["message"] = $"Жанр \"{genre.Title}\" успешно добавлен";
+                return RedirectToAction(nameof(HomeController.ShowGenres), nameof(HomeController).Replace("Controller", ""));
             }
-            catch (Exception)
+            else
             {
-                return View();
+                return View(genre);
             }
         }
 
@@ -52,16 +46,9 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            try
-            {
-                var genre = _genresRepository.GetGenre(id);
+            var genre = _genresRepository.GetGenre(id);
 
-                return View(genre);
-            }
-            catch (Exception)
-            {
-                return View();
-            }
+            return View(genre);
         }
 
         // POST: Genre/Edit/
@@ -69,24 +56,17 @@ namespace TestAppAspCore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Genre genre)
         {
-            try
+            if (genre.Id <= 0)
+                throw new ArgumentException("Genre ID is empty or <= 0");
+            if (ModelState.IsValid)
             {
-                if (genre.Id <= 0)
-                    throw new ArgumentException("Genre ID is empty or <= 0");
-                if (ModelState.IsValid)
-                {
-                    _genresRepository.EditGenre(genre);
-                    return RedirectToAction(nameof(HomeController.ShowGenres), nameof(HomeController).Replace("Controller", ""));
-                }
-                else
-                {
-                    return View(genre);
-                }
-
+                _genresRepository.EditGenre(genre);
+                TempData["message"] = $"Жанр \"{genre.Title}\" успешно изменен";
+                return RedirectToAction(nameof(HomeController.ShowGenres), nameof(HomeController).Replace("Controller", ""));
             }
-            catch (Exception)
+            else
             {
-                return View();
+                return View(genre);
             }
         }
 
@@ -94,16 +74,9 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            try
-            {
-                var genre = _genresRepository.GetGenre(id);
+            var genre = _genresRepository.GetGenre(id);
 
-                return View(genre);
-            }
-            catch (Exception)
-            {
-                return View();
-            }
+            return View(genre);
         }
 
         // POST: Genre/Delete/
@@ -111,23 +84,17 @@ namespace TestAppAspCore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Genre genre)
         {
-            try
+            if (genre.Id <= 0)
+                throw new ArgumentException("Genre ID is empty or <= 0");
+            if (ModelState.IsValid)
             {
-                if (genre.Id <= 0)
-                    throw new ArgumentException("Genre ID is empty or <= 0");
-                if (ModelState.IsValid)
-                {
-                    _genresRepository.DeleteGenre(genre);
-                    return RedirectToAction(nameof(HomeController.ShowGenres), nameof(HomeController).Replace("Controller", ""));
-                }
-                else
-                {
-                    return View(genre);
-                }
+                _genresRepository.DeleteGenre(genre);
+                TempData["message"] = $"Жанр \"{genre.Title}\" успешно удален";
+                return RedirectToAction(nameof(HomeController.ShowGenres), nameof(HomeController).Replace("Controller", ""));
             }
-            catch (Exception)
+            else
             {
-                return View();
+                return View(genre);
             }
         }
     }

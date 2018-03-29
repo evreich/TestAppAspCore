@@ -7,6 +7,10 @@
     @Html.Partial("_MenuPartialView")
     <div class="container body-content col-10 col-md-10 col-sm-9 offset-sm-3 offset-md-2">
         <br />
+        @if (TempData["message"] != null)
+        {
+            <div id="alert-closing" class="alert alert-success">@TempData["message"]</div>
+        }
         <h2>Список жанров</h2>
         <table class="table-condensed">
             <tr>
@@ -16,19 +20,19 @@
                 <th></th>
             </tr>
             @foreach (var genre in Model)
-            {
-                <tr>
-                    <td>@genre.Title</td>
-                    <td>
-                        @foreach (var book in genre.Books)
-                        {
-                            <a asp-controller="Book" asp-action="Show" asp-route-id="@book.Id"><p>@book.Title</p></a>
-                        }
-                    </td>
-                    <td><a asp-controller="Genre" asp-action="Edit" asp-route-id="@genre.Id" class="btn btn-info">Изменить</a></td>
-                    <td><a asp-controller="Genre" asp-action="Delete" asp-route-id="@genre.Id" class="btn btn-danger">Удалить</a></td>
-                </tr>
+        {
+            <tr>
+                <td>@genre.Title</td>
+                <td>
+                    @foreach (var book in genre.Books)
+                {
+                    <a asp-controller="Book" asp-action="Show" asp-route-id="@book.Id"><p>@book.Title</p></a>
             }
+                </td>
+                <td><a asp-controller="Genre" asp-action="Edit" asp-route-id="@genre.Id" class="btn btn-info">Изменить</a></td>
+                <td><a asp-controller="Genre" asp-action="Delete" asp-route-id="@genre.Id" class="btn btn-danger">Удалить</a></td>
+            </tr>
+    }
         </table>
         <br />
         <a asp-controller="Genre" asp-action="Create" class="btn btn-success" role="button" aria-pressed="true">Создать жанр</a>
