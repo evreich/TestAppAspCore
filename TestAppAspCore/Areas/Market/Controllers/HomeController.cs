@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestAppAspCore.Areas.Market.ViewModels;
 using TestAppAspCore.DBRepositories;
@@ -12,12 +13,13 @@ using TestAppAspCore.ViewModels;
 namespace TestAppAspCore.Areas.Market.Controllers
 {
     [Area("Market")]
+    [Authorize(Roles = RolesConstants.USER_ROLE)]
     public class HomeController : Controller
     {
         private readonly int COUNT_ELEMS_ON_PAGE;
 
-        IBooksRepository _booksRepository;
-        IGenresRepository _genresRepository;
+        private readonly IBooksRepository _booksRepository;
+        private readonly IGenresRepository _genresRepository;
 
         public HomeController(IBooksRepository booksRepository, IGenresRepository genresRepository, int countElemOnPage = 8)
         {

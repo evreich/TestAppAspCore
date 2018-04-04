@@ -1,0 +1,46 @@
+﻿@model TestAppAspCore.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Регистрация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="offset-2 col-7">
+            <br />
+            <h2>Регистрация пользователя</h2>
+            <form method="post" asp-controller="Account" asp-action="Register">
+                <div class="validation" asp-validation-summary="ModelOnly"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label><br />
+                    <input asp-for="Email" class="form-control" placeholder="Например, ivanov@mail.ru" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FullName" class="control-label"></label><br />
+                    <input asp-for="FullName" class="form-control" placeholder="Например, Иванов Иван Иванович" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Phone" class="control-label"></label><br />
+                    <input asp-for="Phone" class="form-control" placeholder="Например, 89623288933" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label><br />
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PasswordConfirm" class="control-label"></label><br />
+                    <input asp-for="PasswordConfirm" class="form-control" />
+                    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                </div>
+                <input type="submit" value="Регистрация" class="btn btn-success" />
+            </form>
+
+        </div>
+    </div>
+</div>
+@section Footer{
+    @Html.Partial("_ValidationScriptPartialView")
+}

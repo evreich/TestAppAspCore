@@ -8,13 +8,15 @@ using TestAppAspCore.Models;
 using TestAppAspCore.Infrastructure;
 using TestAppAspCore.ViewModels;
 using TestAppAspCore.Areas.Market.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestAppAspCore.Areas.Market.Controllers
 {
     [Area("Market")]
+    [Authorize(Roles = RolesConstants.USER_ROLE)]
     public class CartController : Controller
     {
-        private IBooksRepository _repository;
+        private readonly IBooksRepository _repository;
         private Cart _cart;
 
         public CartController(IBooksRepository repo, Cart cartService)

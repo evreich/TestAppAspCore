@@ -11,7 +11,7 @@ using TestAppAspCore.EFCore;
 namespace TestAppAspCore.Migrations
 {
     [DbContext(typeof(BooksContext))]
-    [Migration("20180312090901_Initial")]
+    [Migration("20180402135620_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

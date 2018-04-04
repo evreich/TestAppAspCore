@@ -1,12 +1,8 @@
-﻿window.onload = function () {
-    closingAlert();
-};
-
-var onSuccessAddBook = function (context) {
+﻿var onSuccessAddBook = function (context) {
     let alertMessage = $(`<div id="alert-closing" class="alert alert-success"></div>`);
     alertMessage.text(`Книга ${context.bookTitle} успешно добавлена в корзину!`);
     $("#messageBox").append(alertMessage);
-    closingAlert();
+    alertMessage.fadeOut(5000);
     $("#countBooks").text(context.countBooks);
 };
 
@@ -15,10 +11,4 @@ var onFailedAddBook = function (context) {
     alertMessage.text(`Ошибка! Книга не добавлена в корзину!`);
     $("#messageBox").append(alertMessage);
     closingAlert();
-};
-
-function closingAlert() {
-    let alert = $("#alert-closing");
-    if (alert)
-        alert.fadeOut(5000);
 };

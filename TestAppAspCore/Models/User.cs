@@ -9,5 +9,15 @@ namespace TestAppAspCore.Models
     public class User : IdentityUser
     {
         public string FullName { get; set; }
+
+        public User()
+        {
+
+        }
+
+        public User(string userName, string fullName) : base(userName)
+        {
+            FullName = fullName;
+        }
     }
 }

@@ -6,13 +6,15 @@ using TestAppAspCore.ModelHelpers;
 using TestAppAspCore.Models;
 using TestAppAspCore.ViewModels;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestAppAspCore.Controllers
 {
+    [Authorize(Roles = RolesConstants.ADMIN_ROLE)]
     public class BookController : Controller
     {
-        IBooksRepository _booksRepository;
-        IGenresRepository _genresRepository;
+        private readonly IBooksRepository _booksRepository;
+        private readonly IGenresRepository _genresRepository;
 
         public BookController(IBooksRepository booksRepository, IGenresRepository genresRepository)
         {
@@ -27,7 +29,7 @@ namespace TestAppAspCore.Controllers
             return View(new ActionBooksPagesViewModel
             {
                 Book = null,
-                Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title"),
+                Genres = new SelectList(_genresRepository.GetAllGenres(), nameof(Genre.Id), nameof(Genre.Title)),
                 PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
             });
         }
@@ -48,7 +50,7 @@ namespace TestAppAspCore.Controllers
                 return View(new ActionBooksPagesViewModel
                 {
                     Book = book,
-                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title"),
+                    Genres = new SelectList(_genresRepository.GetAllGenres(), nameof(Genre.Id), nameof(Genre.Title)),
                     PrevPageUrl = prevPageUrl
                 });
             }
@@ -63,7 +65,7 @@ namespace TestAppAspCore.Controllers
             return View(new ActionBooksPagesViewModel
             {
                 Book = book,
-                Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                Genres = new SelectList(_genresRepository.GetAllGenres(), nameof(Genre.Id), nameof(Genre.Title),
                                         _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
                 PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
             }); 
@@ -87,7 +89,7 @@ namespace TestAppAspCore.Controllers
                 return View(new ActionBooksPagesViewModel
                 {
                     Book = book,
-                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                    Genres = new SelectList(_genresRepository.GetAllGenres(), nameof(Genre.Id), nameof(Genre.Title),
                                         _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
                     PrevPageUrl = prevPageUrl
                 });
@@ -112,7 +114,7 @@ namespace TestAppAspCore.Controllers
             return View(new ActionBooksPagesViewModel
             {
                 Book = book,
-                Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                Genres = new SelectList(_genresRepository.GetAllGenres(), nameof(Genre.Id), nameof(Genre.Title),
                                         _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
                 PrevPageUrl = HttpContext.Request.Headers["Referer"].ToString()
             });
@@ -136,7 +138,7 @@ namespace TestAppAspCore.Controllers
                 return View(new ActionBooksPagesViewModel
                 {
                     Book = book,
-                    Genres = new SelectList(_genresRepository.GetAllGenres(), "Id", "Title",
+                    Genres = new SelectList(_genresRepository.GetAllGenres(), nameof(Genre.Id), nameof(Genre.Title),
                                         _genresRepository.GetAllGenres().FirstOrDefault(g => g.Id == book.GenreId)),
                     PrevPageUrl = prevPageUrl
                 });

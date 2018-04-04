@@ -1,0 +1,37 @@
+﻿@model IEnumerable<TestAppAspCore.ViewModels.ShowUserViewModel>
+@{
+    ViewData["Title"] = "Список пользователей";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="offset-2 col-7">
+            <br />
+            <h2>Пользователи</h2>
+            <br />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Роль</th>
+                        <th class="text-center">Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var elem in Model)
+                    { 
+                        <tr>
+                            <td>@elem.User.Email</td>
+                            <td>@elem.RoleName</td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-primary" asp-controller="Account" asp-action="ChangeRole" asp-route-userId="@elem.User.Id">Изменить роль</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <a href="@ViewBag["PrevPage"]">Назад</a>
+        </div>
+    </div>
+</div>

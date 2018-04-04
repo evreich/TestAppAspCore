@@ -15,7 +15,7 @@ namespace TestAppAspCore.EFCore
 
         public override void Init()
         {
-            if (!_context.Books.Any())
+            if (!_context.Genres.Any())
             {
                 SetInitGenres();
             }

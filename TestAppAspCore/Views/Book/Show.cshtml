@@ -9,7 +9,7 @@
     <form asp-controller="Book" asp-action="Delete" asp-antiforgery="true" method="get">
         <div class="container">
             <div class="row">
-                <div class="col-6">
+                <div class="offset-2 col-7">
                     <h2>Описание книги</h2>
                     <div class="validation" asp-validation-summary="ModelOnly" />
                     <input type="hidden" asp-for="Id" />

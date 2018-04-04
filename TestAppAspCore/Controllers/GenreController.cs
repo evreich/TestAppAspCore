@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestAppAspCore.DBRepositories;
 using TestAppAspCore.Models;
@@ -9,9 +10,10 @@ using TestAppAspCore.ViewModels;
 
 namespace TestAppAspCore.Controllers
 {
+    [Authorize(Roles = RolesConstants.ADMIN_ROLE)]
     public class GenreController : Controller
     {
-        IGenresRepository _genresRepository;
+        private readonly IGenresRepository _genresRepository;
 
         public GenreController(IGenresRepository genresRepository)
         {

@@ -1,20 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestAppAspCore.DBRepositories;
 using TestAppAspCore.ModelHelpers;
 using TestAppAspCore.Models;
 using TestAppAspCore.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace TestAppAspCore.Controllers
 {
+    [Authorize(Roles = RolesConstants.ADMIN_ROLE)]
     public class HomeController : Controller
     {
         private readonly int COUNT_ELEMS_ON_PAGE;
         
-        IBooksRepository _booksRepository;
-        IGenresRepository _genresRepository;
+        private readonly IBooksRepository _booksRepository;
+        private readonly IGenresRepository _genresRepository;
 
         public HomeController(IBooksRepository booksRepository, IGenresRepository genresRepository, int countElemOnPage = 5)
         {
@@ -72,6 +75,18 @@ namespace TestAppAspCore.Controllers
         {
             ViewBag.ErrorCode = code;
             return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShowUsers([FromServices] UserManager<User> _userManager, [FromServices] RoleManager<IdentityRole> _roleManager)
+        {
+            List<ShowUserViewModel> showUsersList = new List<ShowUserViewModel>();
+            foreach (User user in _userManager.Users)
+            {
+                var role = (await _userManager.GetRolesAsync(user))[0];
+                showUsersList.Add(new ShowUserViewModel { User = user, RoleName = role });
+            }
+            ViewBag["PrevPage"] = HttpContext.Request.Headers["Referer"].ToString();
+            return View(showUsersList);
         }
     }
 }

@@ -14,26 +14,38 @@
     <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse navbar-custom fixed-top">
         <div class="navbar-collapse">
             <div class="row">
-                <div class="col-9">
-                    <ul>                            
-                        @if (Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
-                        {
-                            <li class="navbar-brand"><a asp-area="Market" asp-controller="Home" asp-action="ShowBooks">Books Market</a></li>
-                        }
-                        else
-                        {
-                            <li class="navbar-brand"><a asp-controller="Home" asp-action="Index">Books Market</a></li>
-                            <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link">Список книг</a></li>
-                            <li class="nav-item"><a asp-controller="Home" asp-action="ShowGenres" class="nav-link">Список жанров</a></li>
-                        }
-                    </ul>
+                <div class="col-7">
+                    <!--Нужно изменить вывод меню в соответствии с ролью. Нужен отдельный ViewComponent + class MenuService-->
+                        <ul>                            
+                            @if (!User.IsInRole(RolesConstants.ADMIN_ROLE))
+                            {
+                                <li class="navbar-brand"><a asp-area="Market" asp-controller="Home" asp-action="ShowBooks">Books Market</a></li>
+                            }
+                            else
+                            {
+                                <li class="navbar-brand"><a asp-controller="Home" asp-action="Index">Books Market</a></li>
+                                <li class="nav-item"><a asp-controller="Home" asp-action="Index" class="nav-link">Книги</a></li>
+                                <li class="nav-item"><a asp-controller="Home" asp-action="ShowGenres" class="nav-link">Жанры</a></li>
+                                <li class="nav-item"><a asp-controller="Home" asp-action="ShowUsers" class="nav-link">Пользователи</a></li>
+                            }
+                        </ul>
+                    <!--Конец блока изменений-->
                 </div>
-                <div class="col-3">
-                    @if (Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
+                <div class="col-5">
+                    @if (User.Identity.IsAuthenticated)
                     {
-                        @await Component.InvokeAsync("CartSummary") 
+                        <form method="post" class="d-inline-block float-right" asp-controller="Account" asp-action="LogOff">
+                            <button class="btn" type="submit"><span class="fa fa-sign-out-alt"></span>Выход</button>
+                        </form>
+                        <p class="d-inline-block mr-2 mt-2 mb-0 float-right">@User.Identity.Name</p>
+                        @if (!User.IsInRole(RolesConstants.ADMIN_ROLE))
+                        {
+                            <div class="float-right mr-3">
+                                @await Component.InvokeAsync("CartSummary")
+                            </div>
+                        }
                     }
-                    
+
                 </div>
             </div>
         </div>

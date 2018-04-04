@@ -9,7 +9,7 @@
     <form asp-controller="Order" asp-action="Checkout" asp-antiforgery="true" method="post">
         <div class="container">
             <div class="row">
-                <div class="col-6">
+                <div class="offset-2 col-7">
                     <h2>Заказ</h2>
                     <h4>Укажите местоположение для того, чтобы мы могли верно доставить Ваш заказ!</h4>
                     <div class="validation" asp-validation-summary="ModelOnly" />
@@ -51,7 +51,7 @@
 
                     <input type="submit" value="Оформить" class="btn btn-lg" />
                     <br /><br />
-                    <a href="/Market/ShowBooks">Назад</a>
+                    <a href="/Market">Назад</a>
                 </div>
             </div>
         </div>

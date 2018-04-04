@@ -17,21 +17,7 @@ namespace TestAppAspCore.EFCore
         {
             if (!_context.Books.Any())
             {
-                List<Genre> genres = new List<Genre>() {
-                    new Genre
-                    {
-                        Title = "Детектив"
-                    },
-                    new Genre
-                    {
-                        Title = "Фантастика"
-                    },
-                    new Genre
-                    {
-                        Title = "Роман"
-                    }
-                };
-                SetInitBooks(genres);
+                SetInitBooks(_context.Genres.ToList());
             }
         }
 

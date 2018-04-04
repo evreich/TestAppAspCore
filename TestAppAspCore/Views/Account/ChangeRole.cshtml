@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model TestAppAspCore.ViewModels.ChangeRoleViewModel
+@{
+    ViewData["Title"] = "Изменить роль";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class=" offset-2 col-7">
+            <br />
+            <h2>Изменить роль @Model.UserEmail</h2>
+
+            <form asp-action="ChangeRole" asp-controller="Account" method="post">
+                <input type="hidden" name="userId" value="@Model.UserId" />
+                <div class="form-group">
+                    <select name="currRole" asp-items="Model.AllRoles" class="custom-select"></select>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </form>
+            <a asp-controller="Home" asp-action="ShowUsers">Назад</a>
+        </div>
+    </div>
+</div>

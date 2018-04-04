@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TestAppAspCore.Areas.Market.Controllers;
+using TestAppAspCore.Controllers;
 using TestAppAspCore.DBRepositories;
 using TestAppAspCore.EFCore;
+using TestAppAspCore.SeedDBHelpers;
 using TestAppAspCore.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestAppAspCore
 {
@@ -39,7 +42,19 @@ namespace TestAppAspCore
                 opts.Password.RequireLowercase = false; 
                 opts.Password.RequireUppercase = false; 
                 opts.Password.RequireDigit = true;
-            }).AddEntityFrameworkStores<IdentityContext>();
+                opts.Lockout.MaxFailedAccessAttempts = 5;
+                opts.Lockout.AllowedForNewUsers = true;
+                opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                
+            })
+            .AddEntityFrameworkStores<IdentityContext>()
+            .AddDefaultTokenProviders();
+            services.ConfigureApplicationCookie(opts =>
+            {
+                opts.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                opts.LoginPath = $"/{nameof(AccountController).Replace("Controller", "")}/{nameof(AccountController.Login)}";
+                opts.AccessDeniedPath = $"/{nameof(AccountController).Replace("Controller", "")}/{nameof(AccountController.AccessDenied)}";
+            });
 
             services.AddScoped<IBooksRepository, BooksRepository>();
             services.AddScoped<IGenresRepository, GenresRepository>();
@@ -62,24 +77,24 @@ namespace TestAppAspCore
             {
                 app.UseExceptionHandler("/Home/ServerError");
             }
+            app.UseAuthentication();
             app.UseStatusCodePagesWithReExecute("/Home/ErrorStatusCode", "?code={0}");
 
             app.UseStaticFiles();
             app.UseSession();
-            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "userBooksByGenrePagination",
                     template: "{area:exists}/Books/{genre}/Page/{page:int}",
-                    defaults: new { area = "Market" , controller = "Home", action = "ShowBooksByGenre" }
+                    defaults: new { area = "Market", controller = "Home", action = "ShowBooksByGenre" }
                 );
 
                 routes.MapRoute(
                     name: "userIndexBooksPagination",
                     template: "{area:exists}/Books/Page/{page:int}",
-                    defaults: new { area = "Market" , controller = "Home", action = "ShowBooks" }
+                    defaults: new { area = "Market", controller = "Home", action = "ShowBooks" }
                 );
 
                 routes.MapRoute(
@@ -96,12 +111,17 @@ namespace TestAppAspCore
                 routes.MapRoute(
                     name: "adminIndexBooksPagination",
                     template: "Books/Page/{page:int}",
-                    defaults: new { controller="Home", action="Index" });
+                    defaults: new { controller = "Home", action = "Index" });
 
                 routes.MapRoute(
                     name: "adminDefault",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //заполнение БД в случае отсутствия данных
+            BooksAndGenresSeedData.EnsurePopulated(app);
+            IdentitySeedData.EnsureRoles(app);
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

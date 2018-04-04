@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestAppAspCore.Infrastructure;
 using TestAppAspCore.Models;
@@ -9,6 +10,7 @@ using TestAppAspCore.Models;
 namespace TestAppAspCore.Areas.Market.Controllers
 {
     [Area("Market")]
+    [Authorize(Roles=RolesConstants.USER_ROLE)]
     public class OrderController : Controller
     {
         [HttpGet]
