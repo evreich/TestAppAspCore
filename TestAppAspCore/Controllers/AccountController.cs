@@ -45,7 +45,7 @@ namespace TestAppAspCore.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, RolesConstants.USER_ROLE);
+                    await _userManager.AddToRoleAsync(user, RolesHelper.USER_ROLE);
                     // установка куки
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction(nameof(Areas.Market.Controllers.HomeController.ShowBooks), 
@@ -86,14 +86,14 @@ namespace TestAppAspCore.Controllers
                     // проверяем роль пользователя и перенаправляем в соответствии с ней на соотв страницу              
                     switch (role[0])
                     {
-                        case RolesConstants.ADMIN_ROLE:
+                        case RolesHelper.ADMIN_ROLE:
                             return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
-                        case RolesConstants.USER_ROLE:
+                        case RolesHelper.USER_ROLE:
                             return RedirectToAction(nameof(Areas.Market.Controllers.HomeController.ShowBooks), 
                                 nameof(Areas.Market.Controllers.HomeController).Replace("Controller", ""), new { area = nameof(Areas.Market) });
-                        case RolesConstants.BOOKKEEPER_ROLE:
+                        case RolesHelper.BOOKKEEPER_ROLE:
                             break;
-                        case RolesConstants.STOREKEEPER_ROLE:
+                        case RolesHelper.STOREKEEPER_ROLE:
                             break;
                         default:
                             throw new UnauthorizedAccessException("Ошибка! Пользователь не обладает зарегистрированной ролью.");

@@ -10,7 +10,7 @@ using TestAppAspCore.ViewModels;
 
 namespace TestAppAspCore.Controllers
 {
-    [Authorize(Roles = RolesConstants.ADMIN_ROLE)]
+    [Authorize(Roles = RolesHelper.ADMIN_ROLE)]
     public class GenreController : Controller
     {
         private readonly IGenresRepository _genresRepository;

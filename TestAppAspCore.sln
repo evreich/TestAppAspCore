@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QPD.DBUpdaters", "QPD.DBUpd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestAppAspCore.Tests", "TestAppAspCore.Tests\TestAppAspCore.Tests.csproj", "{9ECE4871-C254-4A4E-AA4E-B8F449808782}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QPD.PartialMenuLibrary", "QPD.PartialMenuLibrary\QPD.PartialMenuLibrary.csproj", "{FF2279D4-ED41-4EC8-9454-ABF39EC2A37D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9ECE4871-C254-4A4E-AA4E-B8F449808782}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9ECE4871-C254-4A4E-AA4E-B8F449808782}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9ECE4871-C254-4A4E-AA4E-B8F449808782}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF2279D4-ED41-4EC8-9454-ABF39EC2A37D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF2279D4-ED41-4EC8-9454-ABF39EC2A37D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF2279D4-ED41-4EC8-9454-ABF39EC2A37D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF2279D4-ED41-4EC8-9454-ABF39EC2A37D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QPD.DBUpdaters\QPD.DBUpdaters.csproj" />
+    <ProjectReference Include="..\QPD.PartialMenuLibrary\QPD.PartialMenuLibrary.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

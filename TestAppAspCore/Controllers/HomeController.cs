@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace TestAppAspCore.Controllers
 {
-    [Authorize(Roles = RolesConstants.ADMIN_ROLE)]
+    [Authorize(Roles = RolesHelper.ADMIN_ROLE)]
     public class HomeController : Controller
     {
         private readonly int COUNT_ELEMS_ON_PAGE;
@@ -77,7 +77,7 @@ namespace TestAppAspCore.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> ShowUsers([FromServices] UserManager<User> _userManager, [FromServices] RoleManager<IdentityRole> _roleManager)
+        public async Task<IActionResult> ShowUsers([FromServices] UserManager<User> _userManager)
         {
             List<ShowUserViewModel> showUsersList = new List<ShowUserViewModel>();
             foreach (User user in _userManager.Users)

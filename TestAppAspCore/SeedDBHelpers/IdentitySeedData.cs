@@ -27,7 +27,7 @@ namespace TestAppAspCore.SeedDBHelpers
                 };
                 await userManager.CreateAsync(user, _adminPassword);
                 user.SecurityStamp = Guid.NewGuid().ToString("D");
-                await userManager.AddToRoleAsync(user, RolesConstants.ADMIN_ROLE);
+                await userManager.AddToRoleAsync(user, RolesHelper.ADMIN_ROLE);
             }
         }
 
@@ -36,7 +36,7 @@ namespace TestAppAspCore.SeedDBHelpers
             RoleManager<IdentityRole> roleManager = app.ApplicationServices.GetRequiredService<RoleManager<IdentityRole>>();
             if (roleManager.Roles.Count() < 1)
             {
-                foreach(var constField in typeof(RolesConstants).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+                foreach(var constField in typeof(RolesHelper).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
                             .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
                             .Select(x => (string)x.GetRawConstantValue())
                             .ToList())

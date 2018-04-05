@@ -15,6 +15,7 @@ using TestAppAspCore.EFCore;
 using TestAppAspCore.SeedDBHelpers;
 using TestAppAspCore.Models;
 using Microsoft.EntityFrameworkCore;
+using QPD.PartialMenuLibrary;
 
 namespace TestAppAspCore
 {
@@ -59,6 +60,7 @@ namespace TestAppAspCore
             services.AddScoped<IBooksRepository, BooksRepository>();
             services.AddScoped<IGenresRepository, GenresRepository>();
 
+            services.AddScoped<MenuService<MenuForRole>>();
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc();

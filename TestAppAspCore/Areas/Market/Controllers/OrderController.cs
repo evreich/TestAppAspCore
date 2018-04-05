@@ -10,7 +10,7 @@ using TestAppAspCore.Models;
 namespace TestAppAspCore.Areas.Market.Controllers
 {
     [Area("Market")]
-    [Authorize(Roles=RolesConstants.USER_ROLE)]
+    [Authorize(Roles=RolesHelper.USER_ROLE)]
     public class OrderController : Controller
     {
         [HttpGet]

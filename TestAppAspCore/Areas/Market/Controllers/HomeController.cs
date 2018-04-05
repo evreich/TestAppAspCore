@@ -13,7 +13,7 @@ using TestAppAspCore.ViewModels;
 namespace TestAppAspCore.Areas.Market.Controllers
 {
     [Area("Market")]
-    [Authorize(Roles = RolesConstants.USER_ROLE)]
+    [Authorize(Roles = RolesHelper.USER_ROLE)]
     public class HomeController : Controller
     {
         private readonly int COUNT_ELEMS_ON_PAGE;

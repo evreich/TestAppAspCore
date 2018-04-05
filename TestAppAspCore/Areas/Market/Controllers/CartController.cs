@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace TestAppAspCore.Areas.Market.Controllers
 {
     [Area("Market")]
-    [Authorize(Roles = RolesConstants.USER_ROLE)]
+    [Authorize(Roles = RolesHelper.USER_ROLE)]
     public class CartController : Controller
     {
         private readonly IBooksRepository _repository;
