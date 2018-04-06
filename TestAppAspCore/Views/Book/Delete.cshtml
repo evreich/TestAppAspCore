@@ -39,6 +39,11 @@
                         <input type="date" asp-for="Book.DateCreating" class="form-control" readonly />
                         <span asp-validation-for="Book.DateCreating" class="text-danger"></span>
                     </div>
+                    <div class="form-group">
+                        <label asp-for="Book.Count" class="control-label"></label><br />
+                        <input type="number" min="1" asp-for="Book.Count" class="form-control" readonly/>
+                        <span asp-validation-for="Book.Count" class="text-danger"></span>
+                    </div>
                     <input name="prevPageUrl" type="hidden" value="@Model.PrevPageUrl" />
                     <input type="submit" value="Удалить" class="btn btn-lg" />
                     <br /><br />

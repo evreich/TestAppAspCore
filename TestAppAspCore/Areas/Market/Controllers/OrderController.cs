@@ -25,7 +25,7 @@ namespace TestAppAspCore.Areas.Market.Controllers
         {
             if (ModelState.IsValid)
             {
-                TempData["orderID"] = order.OrderID;
+                TempData["orderID"] = order.OrderId;
                 return RedirectToAction(nameof(HomeController.ShowBooks), nameof(HomeController).Replace("Controller", ""));
             }
             else

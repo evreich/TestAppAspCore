@@ -10,9 +10,21 @@ namespace TestAppAspCore.Models
     public class Order
     {
         [BindNever]
-        public int OrderID { get; set; }
+        [Required]
+        public string UserId { get; set; }
+        public User User { get; set; }
+
         [BindNever]
-        public ICollection<Book> Books { get; set; }
+        public int OrderId { get; set; }
+
+        [BindNever]
+        public bool IsSuccess { get; set; }
+
+        [BindNever]
+        public DateTime DateReturn { get; set; }
+
+        [BindNever]
+        public IList<BookOrder> BookOrders { get; set; } = new List<BookOrder>();
 
         [BindRequired]
         [Required(ErrorMessage = "Ошибка! Введите адрес получения.")]

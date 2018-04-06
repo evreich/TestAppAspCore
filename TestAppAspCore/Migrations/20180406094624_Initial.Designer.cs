@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using TestAppAspCore.EFCore;
 
-namespace TestAppAspCore.Migrations.Identity
+namespace TestAppAspCore.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
-    [Migration("20180402135653_Initial")]
+    [DbContext(typeof(BooksContext))]
+    [Migration("20180406094624_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -129,6 +129,42 @@ namespace TestAppAspCore.Migrations.Identity
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TestAppAspCore.Models.Book", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author")
+                        .IsRequired();
+
+                    b.Property<DateTime>("DateCreating");
+
+                    b.Property<int>("GenreId");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
             modelBuilder.Entity("TestAppAspCore.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -224,6 +260,14 @@ namespace TestAppAspCore.Migrations.Identity
                     b.HasOne("TestAppAspCore.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.Book", b =>
+                {
+                    b.HasOne("TestAppAspCore.Models.Genre", "Genre")
+                        .WithMany("Books")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

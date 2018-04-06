@@ -12,14 +12,12 @@ namespace TestAppAspCore.SeedDBHelpers
 {
     public static class BooksAndGenresSeedData
     {
-        public static void EnsurePopulated(IApplicationBuilder app)
+        public static void EnsurePopulated(IServiceProvider service)
         {
-            var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
-            BooksContext context = serviceScopeFactory.CreateScope().ServiceProvider.GetService<BooksContext>();
-
+            BooksContext context = service.GetRequiredService<BooksContext>();
             try
             {
-                 if (!context.Genres.Any())
+                if (!context.Genres.Any())
                 {
                     DBGenresUpdater updater = new DBGenresUpdater(context);
                     updater.Init();
@@ -32,7 +30,7 @@ namespace TestAppAspCore.SeedDBHelpers
             }
             catch (Exception ex)
             {
-                var logger = app.ApplicationServices.GetRequiredService<ILogger<Program>>();
+                var logger = service.GetRequiredService<ILogger<Program>>();
                 logger.LogError(ex, "An error occurred while seeding the database.");
             }
         }

@@ -35,5 +35,10 @@ namespace TestAppAspCore.ViewModels
 
         [Display(Name = "Жанр")]
         public string GenreTitle { get; set; }
+
+        [Display(Name = "Количество")]
+        [BindRequired]
+        [Required(ErrorMessage = "Ошибка! Пустое значение.")]
+        public int Count { get; set; }
     }
 }

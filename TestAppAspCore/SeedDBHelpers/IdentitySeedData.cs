@@ -15,9 +15,10 @@ namespace TestAppAspCore.SeedDBHelpers
         private const string _adminUser = "vlasov_ms@list.ru";
         private const string _adminFullName = "Власов Максим";
         private const string _adminPassword = "PaSsWoRd123";
-        public static async void EnsurePopulated(IApplicationBuilder app)
+
+        public static async void EnsurePopulated(IServiceProvider service)
         {
-            UserManager<User> userManager = app.ApplicationServices.GetRequiredService<UserManager<User>>();
+            UserManager<User> userManager = service.GetRequiredService<UserManager<User>>();
             User user = await userManager.FindByIdAsync(_adminUser);
             if (user == null)
             {
@@ -31,10 +32,10 @@ namespace TestAppAspCore.SeedDBHelpers
             }
         }
 
-        public static async void EnsureRoles(IApplicationBuilder app)
+        public static async void EnsureRoles(IServiceProvider service)
         {
-            RoleManager<IdentityRole> roleManager = app.ApplicationServices.GetRequiredService<RoleManager<IdentityRole>>();
-            if (roleManager.Roles.Count() < 1)
+            RoleManager<IdentityRole> roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
+            if (roleManager.Roles.Count() < RolesHelper.RolesMenus.Count)
             {
                 foreach(var constField in typeof(RolesHelper).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
                             .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))

@@ -17,7 +17,8 @@ namespace TestAppAspCore.ModelHelpers
                 Title = bookVM.Title,
                 Author = bookVM.Author,
                 GenreId = bookVM.GenreId,
-                DateCreating = bookVM.DateCreating
+                DateCreating = bookVM.DateCreating,
+                Count = bookVM.Count
             };
         }
 
@@ -30,7 +31,8 @@ namespace TestAppAspCore.ModelHelpers
                 Author = book.Author,
                 GenreId = book.GenreId,
                 GenreTitle = book.Genre.Title,
-                DateCreating = book.DateCreating
+                DateCreating = book.DateCreating,
+                Count = book.Count
             };
         }
     }

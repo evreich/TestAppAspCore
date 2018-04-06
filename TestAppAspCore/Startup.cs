@@ -31,11 +31,9 @@ namespace TestAppAspCore
         public void ConfigureServices(IServiceCollection services)
         {
             string defaultConnection = Configuration.GetConnectionString("DefaultConnection");
-            string identityConnection = Configuration.GetConnectionString("IdentityConnection");
 
             services.AddLogging();
-            services.AddDbContext<BooksContext>(options => options.UseSqlServer(defaultConnection));
-            services.AddDbContext<IdentityContext>(options => options.UseSqlServer(identityConnection));
+            services.AddDbContext<BooksContext>(options => options.UseSqlServer(defaultConnection), ServiceLifetime.Transient);
             services.AddIdentity<User, IdentityRole>(opts =>
             {
                 opts.Password.RequiredLength = 5; 
@@ -48,13 +46,13 @@ namespace TestAppAspCore
                 opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
                 
             })
-            .AddEntityFrameworkStores<IdentityContext>()
+            .AddEntityFrameworkStores<BooksContext>()
             .AddDefaultTokenProviders();
             services.ConfigureApplicationCookie(opts =>
             {
                 opts.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                opts.LoginPath = $"/{nameof(AccountController).Replace("Controller", "")}/{nameof(AccountController.Login)}";
-                opts.AccessDeniedPath = $"/{nameof(AccountController).Replace("Controller", "")}/{nameof(AccountController.AccessDenied)}";
+                opts.LoginPath = "/Account/Login";
+                opts.AccessDeniedPath = "/Account/AccessDenied";
             });
 
             services.AddScoped<IBooksRepository, BooksRepository>();
@@ -79,12 +77,12 @@ namespace TestAppAspCore
             {
                 app.UseExceptionHandler("/Home/ServerError");
             }
-            app.UseAuthentication();
+
             app.UseStatusCodePagesWithReExecute("/Home/ErrorStatusCode", "?code={0}");
 
             app.UseStaticFiles();
             app.UseSession();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -119,11 +117,6 @@ namespace TestAppAspCore
                     name: "adminDefault",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            //заполнение БД в случае отсутствия данных
-            BooksAndGenresSeedData.EnsurePopulated(app);
-            IdentitySeedData.EnsureRoles(app);
-            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

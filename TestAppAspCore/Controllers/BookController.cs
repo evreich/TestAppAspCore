@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TestAppAspCore.Controllers
 {
-    [Authorize(Roles = RolesHelper.ADMIN_ROLE)]
+    [Authorize(Roles = RolesHelper.ADMIN_ROLE + "," + RolesHelper.STOREKEEPER_ROLE)]
     public class BookController : Controller
     {
         private readonly IBooksRepository _booksRepository;

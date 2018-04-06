@@ -11,7 +11,6 @@ using TestAppAspCore.ViewModels;
 
 namespace TestAppAspCore.Controllers
 {
-    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -26,12 +25,14 @@ namespace TestAppAspCore.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -63,6 +64,7 @@ namespace TestAppAspCore.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
@@ -70,6 +72,7 @@ namespace TestAppAspCore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -92,9 +95,9 @@ namespace TestAppAspCore.Controllers
                             return RedirectToAction(nameof(Areas.Market.Controllers.HomeController.ShowBooks), 
                                 nameof(Areas.Market.Controllers.HomeController).Replace("Controller", ""), new { area = nameof(Areas.Market) });
                         case RolesHelper.BOOKKEEPER_ROLE:
-                            break;
+                            return RedirectToAction(nameof(HomeController.ShowOrders), nameof(HomeController).Replace("Controller", ""));
                         case RolesHelper.STOREKEEPER_ROLE:
-                            break;
+                            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
                         default:
                             throw new UnauthorizedAccessException("Ошибка! Пользователь не обладает зарегистрированной ролью.");
                     };
@@ -109,6 +112,7 @@ namespace TestAppAspCore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> LogOff()
         {
             // удаляем аутентификационные куки
@@ -123,6 +127,7 @@ namespace TestAppAspCore.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = RolesHelper.ADMIN_ROLE)]
         public async Task<IActionResult> ChangeRole(string userId)
         {
             User user = await _userManager.FindByIdAsync(userId);
@@ -146,6 +151,7 @@ namespace TestAppAspCore.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = RolesHelper.ADMIN_ROLE)]
         public async Task<IActionResult> ChangeRole(string userId, string currRole)
         {
             // получаем пользователя

@@ -27,6 +27,7 @@
                 <th class="text-center">Автор</th>
                 <th class="text-center">Жанр</th>
                 <th class="text-center">Дата создания</th>
+                <th class="text-center">Количество</th>
                 <th class="text-center">Действия</th>
             </tr>
             @foreach (var book in Model.Books)
@@ -36,6 +37,7 @@
                 <td>@book.Author</td>
                 <td>@book.GenreTitle</td>
                 <td>@book.DateCreating.Year</td>
+                <td>@book.Count</td>
                 <td>
                     <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-info" style="padding-right:10px;">Изменить</a>
                     <a asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger">Удалить</a>

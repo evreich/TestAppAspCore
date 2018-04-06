@@ -13,11 +13,13 @@ namespace TestAppAspCore
         public const string ADMIN_ROLE = "admin";
         public const string BOOKKEEPER_ROLE = "bookKeeper";
         public const string STOREKEEPER_ROLE = "storeKeeper";
-
+         
         public static readonly Dictionary<string, MenuForRole> RolesMenus = new Dictionary<string, MenuForRole>
         {
             { USER_ROLE, new UserMenu() },
-            { ADMIN_ROLE, new AdminMenu() }
+            { ADMIN_ROLE, new AdminMenu() },
+            { BOOKKEEPER_ROLE, new BookKeeperMenu() },
+            { STOREKEEPER_ROLE, new StoreKeeperMenu() }
         };
 
     }

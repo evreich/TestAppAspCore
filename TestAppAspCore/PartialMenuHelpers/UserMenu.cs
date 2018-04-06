@@ -15,7 +15,20 @@ namespace TestAppAspCore.PartialMenuHelpers
                 new MenuItem("Books Market",
                     nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
                     nameof(Areas.Market.Controllers.HomeController.ShowBooks),
+                    nameof(Areas.Market)),
+                new MenuItem("Книги",
+                    nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
+                    nameof(Areas.Market.Controllers.HomeController.ShowBooks),
+                    nameof(Areas.Market)),
+                new MenuItem("Заказы",
+                    nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
+                    nameof(Areas.Market.Controllers.HomeController.ShowBooks),
+                    nameof(Areas.Market)),
+                new MenuItem("Хранилище",
+                    nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
+                    nameof(Areas.Market.Controllers.HomeController.ShowBooks),
                     nameof(Areas.Market))
+
             };
 
             SetMenuItems(menuItems);

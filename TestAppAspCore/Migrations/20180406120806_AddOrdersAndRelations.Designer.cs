@@ -11,9 +11,10 @@ using TestAppAspCore.EFCore;
 namespace TestAppAspCore.Migrations
 {
     [DbContext(typeof(BooksContext))]
-    partial class BooksContextModelSnapshot : ModelSnapshot
+    [Migration("20180406120806_AddOrdersAndRelations")]
+    partial class AddOrdersAndRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,13 +191,9 @@ namespace TestAppAspCore.Migrations
                     b.Property<string>("Country")
                         .IsRequired();
 
-                    b.Property<DateTime>("DateReturn");
-
                     b.Property<bool>("GiftWrap");
 
                     b.Property<int>("HomeNumber");
-
-                    b.Property<bool>("IsSuccess");
 
                     b.Property<string>("PostIndex")
                         .IsRequired();

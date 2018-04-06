@@ -21,5 +21,10 @@ namespace TestAppAspCore.Models
         [Required]
         public int GenreId { get; set; }
         public Genre Genre { get; set; }
+
+        [Required]
+        public int Count { get; set; }
+
+        public ICollection<BookOrder> BookOrders { get; set; } = new List<BookOrder>();
     }
 }

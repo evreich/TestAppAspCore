@@ -1,23 +1,26 @@
 ﻿@using QPD.PartialMenuLibrary
-
+@{
+    var brandItem = Model.First();
+}
 @model IEnumerable<MenuItem>
 <ul>
     <li class="navbar-brand">
-        <a asp-area="@Model.First().AspAreaName ?? . Market"
-           asp-controller="Home"
-           asp-action="ShowBooks">
-            Books Market
+        <a asp-area="@brandItem.AspAreaName"
+           asp-controller="@brandItem.AspControllerName"
+           asp-action="@brandItem.AspActionName">
+            @brandItem.Title
         </a>
     </li>
 
-    @foreach (MenuItem item in Model.Skip(1))
+    @foreach(MenuItem item in Model.Skip(1))
     {
-        <li class="nav-item">
-            <a asp-controller="Home" 
-               asp-action="Index" 
-               class="nav-link">
-            Книги
-            </a>
-        </li>
+    <li class="navbar-item">
+        <a class="nav-link"
+           asp-area="@item.AspAreaName"
+           asp-controller="@item.AspControllerName"
+           asp-action="@item.AspActionName">
+            @item.Title
+        </a>
+    </li>
     }
 </ul>

@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using TestAppAspCore.EFCore;
 
-namespace TestAppAspCore.Migrations.Identity
+namespace TestAppAspCore.Migrations
 {
-    [DbContext(typeof(IdentityContext))]
-    partial class IdentityContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(BooksContext))]
+    [Migration("20180406135549_ChangeOrder")]
+    partial class ChangeOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -128,6 +129,95 @@ namespace TestAppAspCore.Migrations.Identity
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TestAppAspCore.Models.Book", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Author")
+                        .IsRequired();
+
+                    b.Property<int>("Count");
+
+                    b.Property<DateTime>("DateCreating");
+
+                    b.Property<int>("GenreId");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.BookOrder", b =>
+                {
+                    b.Property<int>("BookId");
+
+                    b.Property<int>("OrderId");
+
+                    b.HasKey("BookId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("BookOrder");
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("City")
+                        .IsRequired();
+
+                    b.Property<string>("Country")
+                        .IsRequired();
+
+                    b.Property<DateTime>("DateReturn");
+
+                    b.Property<bool>("GiftWrap");
+
+                    b.Property<int>("HomeNumber");
+
+                    b.Property<bool>("IsSuccess");
+
+                    b.Property<string>("PostIndex")
+                        .IsRequired();
+
+                    b.Property<string>("State")
+                        .IsRequired();
+
+                    b.Property<string>("Street")
+                        .IsRequired();
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("TestAppAspCore.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -143,7 +233,8 @@ namespace TestAppAspCore.Migrations.Identity
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("FullName");
+                    b.Property<string>("FullName")
+                        .IsRequired();
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -222,6 +313,35 @@ namespace TestAppAspCore.Migrations.Identity
                 {
                     b.HasOne("TestAppAspCore.Models.User")
                         .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.Book", b =>
+                {
+                    b.HasOne("TestAppAspCore.Models.Genre", "Genre")
+                        .WithMany("Books")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.BookOrder", b =>
+                {
+                    b.HasOne("TestAppAspCore.Models.Book", "Book")
+                        .WithMany("BookOrders")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TestAppAspCore.Models.Order", "Order")
+                        .WithMany("BookOrders")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.Order", b =>
+                {
+                    b.HasOne("TestAppAspCore.Models.User", "User")
+                        .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

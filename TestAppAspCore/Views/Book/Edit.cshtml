@@ -36,6 +36,11 @@
                         <input type="date" asp-for="Book.DateCreating" class="form-control" />
                         <span asp-validation-for="Book.DateCreating" class="text-danger"></span>
                     </div>
+                    <div class="form-group">
+                        <label asp-for="Book.Count" class="control-label"></label><br />
+                        <input type="number" min="1" asp-for="Book.Count" class="form-control" />
+                        <span asp-validation-for="Book.Count" class="text-danger"></span>
+                    </div>
 
                     <input type="submit" value="Изменить" class="btn btn-lg" />
                     <br /><br />
