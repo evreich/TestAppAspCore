@@ -12,15 +12,18 @@ namespace TestAppAspCore.Models
         [BindNever]
         [Required]
         public string UserId { get; set; }
+
+        [BindNever]
         public User User { get; set; }
 
         [BindNever]
         public int OrderId { get; set; }
 
         [BindNever]
-        public bool IsSuccess { get; set; }
+        public bool? IsSuccess { get; set; } = null;
 
-        [BindNever]
+        [BindRequired]
+        [Required]
         public DateTime DateReturn { get; set; }
 
         [BindNever]

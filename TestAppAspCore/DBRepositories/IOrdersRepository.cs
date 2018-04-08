@@ -8,7 +8,8 @@ namespace TestAppAspCore.DBRepositories
 {
     interface IOrdersRepository
     {
-        IEnumerable<Order> GetAllOrders();
+        IEnumerable<Order> GetNotConfirmedOrders();
+        IEnumerable<Order> GetOrdersForUser(string userId);
         Order GetOrder(int id);
         void AddOrder(Order order);
         void ConfirmOrder(int orderID);

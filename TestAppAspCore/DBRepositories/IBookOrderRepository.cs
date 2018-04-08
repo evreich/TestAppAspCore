@@ -9,5 +9,6 @@ namespace TestAppAspCore.DBRepositories
     interface IBookOrderRepository
     {
         void ChangeOrderBooks(int orderID, List<Book> deletedBooks);
+        List<Book> GetBooksOfOrder(int orderID);
     }
 }

@@ -11,5 +11,6 @@ namespace TestAppAspCore.Models
         public Book Book { get; set; }
         public int OrderId { get; set; }
         public Order Order { get; set; }
+        public bool IsReturned { get; set; }
     }
 }

@@ -38,6 +38,7 @@ namespace TestAppAspCore.ViewModels
 
         [Display(Name = "Количество")]
         [BindRequired]
+        [Range(1, 50, ErrorMessage = "Ошибка! Введено неверное количество книг")]
         [Required(ErrorMessage = "Ошибка! Пустое значение.")]
         public int Count { get; set; }
     }

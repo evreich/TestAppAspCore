@@ -20,7 +20,6 @@ namespace TestAppAspCore
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args).MigrateDatabase();
-
             
             //заполнение БД в случае отсутствия данных
             BooksAndGenresSeedData.EnsurePopulated(host.Services);
