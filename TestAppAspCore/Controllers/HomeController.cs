@@ -8,16 +8,17 @@ using TestAppAspCore.ModelHelpers;
 using TestAppAspCore.Models;
 using TestAppAspCore.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace TestAppAspCore.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly int COUNT_ELEMS_ON_PAGE;
         
         private readonly IBooksRepository _booksRepository;
         private readonly IGenresRepository _genresRepository;
+        
 
         public HomeController(IBooksRepository booksRepository, IGenresRepository genresRepository, int countElemOnPage = 5)
         {
@@ -60,7 +61,7 @@ namespace TestAppAspCore.Controllers
 
         // GET: Home/ShowGenres
         [HttpGet]
-        [Authorize(Roles = RolesHelper.ADMIN_ROLE)]
+        [Authorize(Roles = RolesHelper.ADMIN_ROLE + "," + RolesHelper.STOREKEEPER_ROLE)]
         public IActionResult ShowGenres()
         {
             return View(_genresRepository.GetAllGenres().ToList());
@@ -97,9 +98,38 @@ namespace TestAppAspCore.Controllers
 
         [HttpGet]
         [Authorize(Roles = RolesHelper.ADMIN_ROLE + "," + RolesHelper.BOOKKEEPER_ROLE)]
-        public IActionResult ShowOrders()
+        public IActionResult ShowOrders([FromServices] IOrdersRepository ordersRepository)
         {
-            return View();
+            return View(ordersRepository.GetNotConfirmedOrders()
+                .Select(order => new ShowOrderViewModel
+                {
+                    OrderID = order.OrderId,
+                    DateReturn = order.DateReturn,
+                    UserName = order.User.FullName
+                })
+                .ToList());
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> RedirectToRoleStartPage([FromServices] UserManager<User> userManager)
+        {
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var roles = await userManager.GetRolesAsync(user);
+            if (roles.Count != 1)
+                throw new Exception("Кол-во ролей пользователя должно быть равно 1.");
+            var startpage = RolesHelper.RoleStartPages.GetValueOrDefault(roles[0]);
+
+            return RedirectPermanent(startpage);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = RolesHelper.ADMIN_ROLE + "," + RolesHelper.BOOKKEEPER_ROLE)]
+        public async Task<IActionResult> ShowReturnedBooks([FromServices] IBookOrderRepository boRepository,
+                                    [FromServices] UserManager<User> userManager)
+        {
+            var userID = (await userManager.FindByNameAsync(User.Identity.Name)).Id;
+            return View(boRepository.GetReturnedBooks().ToList());
         }
     }
 }

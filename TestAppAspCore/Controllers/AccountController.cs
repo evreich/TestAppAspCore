@@ -84,23 +84,10 @@ namespace TestAppAspCore.Controllers
                     if (role.Count != 1)
                     {
                         throw new Exception("Ошибка! Пользователь должен обладать одной ролью.");
-                    }
-
-                    // проверяем роль пользователя и перенаправляем в соответствии с ней на соотв страницу              
-                    switch (role[0])
-                    {
-                        case RolesHelper.ADMIN_ROLE:
-                            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
-                        case RolesHelper.USER_ROLE:
-                            return RedirectToAction(nameof(Areas.Market.Controllers.HomeController.ShowBooks), 
-                                nameof(Areas.Market.Controllers.HomeController).Replace("Controller", ""), new { area = nameof(Areas.Market) });
-                        case RolesHelper.BOOKKEEPER_ROLE:
-                            return RedirectToAction(nameof(HomeController.ShowOrders), nameof(HomeController).Replace("Controller", ""));
-                        case RolesHelper.STOREKEEPER_ROLE:
-                            return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
-                        default:
-                            throw new UnauthorizedAccessException("Ошибка! Пользователь не обладает зарегистрированной ролью.");
                     };
+
+                    var startpage = RolesHelper.RoleStartPages.GetValueOrDefault(role[0]);
+                    return RedirectPermanent(startpage);
                 }
                 else
                 {

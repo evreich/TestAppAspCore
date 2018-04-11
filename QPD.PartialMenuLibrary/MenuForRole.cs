@@ -9,9 +9,10 @@ namespace QPD.PartialMenuLibrary
         public string RoleName { get; }
         public List<MenuItem> MenuItems { get; } = new List<MenuItem>();
 
-        public MenuForRole(string roleName)
+        public MenuForRole(string roleName, List<MenuItem> menu)
         {
             RoleName = roleName;
+            SetMenuItems(menu);
         }
 
         protected void SetMenuItems(List<MenuItem> items)

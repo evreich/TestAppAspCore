@@ -1,0 +1,67 @@
+﻿@model IEnumerable<ShowOrderViewModel>
+@{
+    ViewData["Title"] = "Список необработанных заказов";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="offset-2 col-7">
+            <br />
+            <h2>Необработанные заказы</h2>
+            <br />
+            @if (TempData["message"] != null)
+            {
+                <div id="alert-closing" class="alert alert-success">@TempData["message"]</div>
+            }
+            <div id="messageBox"></div>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID заказа</th>
+                        <th>Пользователь</th>
+                        <th>Дата возврата</th>
+                        <th class="text-center" colspan="3">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var elem in Model)
+                    {
+                        <tr id="@elem.OrderID">
+                            <td><a class="btn btn-link" asp-controller="Order" asp-action="ShowOrder" asp-route-orderID="@elem.OrderID">@elem.OrderID</a></td>
+                            <td>@elem.UserName</td>
+                            <td>@elem.DateReturn.ToShortDateString()</td>
+                            <td class="text-center">
+                                <a class="btn text-light btn-warning" asp-controller="Order" asp-action="EditOrder" asp-route-orderID="@elem.OrderID">Изменить</a>
+                            </td>
+                            <td>
+                                <form class="d-inline-block" asp-action="ConfirmOrder" asp-controller="Order"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-success="onSuccessConfirmOrder"
+                                      data-ajax-failure="onFailedConfirmOrder">
+                                    <input type="hidden" name="orderID" value="@elem.OrderID" />
+                                    <button type="submit" class="btn btn-success ">Принять</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form class="d-inline-block" asp-action="CancelOrder" asp-controller="Order"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-success="onSuccessCancelOrder"
+                                      data-ajax-failure="onFailedCancelOrder">
+                                    <input type="hidden" name="orderID" value="@elem.OrderID" />
+                                    <button type="submit" class="btn btn-danger ">Отклонить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Footer {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/js/BookKeeperOrderAJAX.js"></script>
+}

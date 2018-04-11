@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Order>
+@{
+    string StatusOrder(bool? status)
+    {
+        switch (status)
+        {
+            case null:
+                return "На рассмотрении";
+            case false:
+                return "Не принят";
+            case true:
+                return "Принят";
+            default:
+                return "Ошибка статуса";
+        }
+    }
+
+    ViewData["Title"] = "Заказы пользователя";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="offset-2 col-7">
+            <br />
+            <h2>Заказы</h2>
+            <br />
+            @if (TempData["message"] != null)
+            {
+                <div id="alert-closing" class="alert alert-success">@TempData["message"]</div>
+            }
+            <div id="messageBox"></div>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID заказа</th>
+                        <th>Дата возврата</th>
+                        <th>Статус</th>
+                        <th class="text-center">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var elem in Model)
+                    {
+                    <tr>
+                        <td style="vertical-align:middle;"><a class="btn btn-link" asp-area="Market" asp-controller="Order" asp-action="ShowOrder" asp-route-orderID="@elem.OrderId">@elem.OrderId</a></td>
+                        <td style="vertical-align:middle;">@elem.DateReturn.ToShortDateString()</td>
+                        <td style="vertical-align:middle;">@StatusOrder(elem.IsSuccess)</td>
+                        <td class="text-center">
+                            <a class="btn btn-warning" 
+                               @(elem.IsSuccess != null ? "style=pointer-events:none;border-color:grey;background-color:grey;" : string.Empty)
+                               asp-area="Market" 
+                               asp-controller="Order"
+                               asp-action="EditOrder" 
+                               asp-route-orderID="@elem.OrderId">
+                                Изменить
+                            </a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <a asp-area="Market" asp-controller="Home" asp-action="ShowBooks">Назад</a>
+        </div>
+    </div>
+</div>

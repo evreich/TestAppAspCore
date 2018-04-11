@@ -8,9 +8,7 @@ namespace TestAppAspCore.PartialMenuHelpers
 {
     public class AdminMenu : MenuForRole
     {
-        public AdminMenu() : base(RolesHelper.ADMIN_ROLE)
-        {
-            List<MenuItem> menuItems = new List<MenuItem>
+        private static List<MenuItem> menuItems = new List<MenuItem>
             {
                 new MenuItem("Books Market",
                     nameof(Controllers.HomeController).Replace("Controller", string.Empty),
@@ -23,10 +21,17 @@ namespace TestAppAspCore.PartialMenuHelpers
                     nameof(Controllers.HomeController.ShowGenres)),
                 new MenuItem("Пользователи",
                     nameof(Controllers.HomeController).Replace("Controller", string.Empty),
-                    nameof(Controllers.HomeController.ShowUsers))
+                    nameof(Controllers.HomeController.ShowUsers)),
+                new MenuItem("Заказы",
+                    nameof(Controllers.HomeController).Replace("Controller", string.Empty),
+                    nameof(Controllers.HomeController.ShowOrders)),
+                new MenuItem("Возврат",
+                    nameof(Controllers.HomeController).Replace("Controller", string.Empty),
+                    nameof(Controllers.HomeController.ShowReturnedBooks))
             };
 
-            SetMenuItems(menuItems);
+        public AdminMenu() : base(RolesHelper.ADMIN_ROLE, menuItems)
+        {
         }
     }
 }

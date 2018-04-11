@@ -45,8 +45,8 @@
         </table>
         <div class="text-center">
             <a class="btn btn-primary" href="@Model.ReturnUrl">Продолжить просмотр BookMarket</a>
-            <a class="btn btn-primary 
-               @(@Model.Cart.ComputeTotalValue()==0 ? "disabled" :string.Empty)" 
+            <a class="btn btn-primary
+               @(@Model.Cart.ComputeTotalValue()==0 ? "disabled" :string.Empty)"
                asp-controller="Order" asp-action="Checkout">
                 Оформить заказ
             </a>

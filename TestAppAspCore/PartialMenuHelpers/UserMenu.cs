@@ -8,30 +8,28 @@ namespace TestAppAspCore.PartialMenuHelpers
 {
     public class UserMenu : MenuForRole
     {
-        public UserMenu() : base(RolesHelper.USER_ROLE)
+        private static List<MenuItem> menuItems = new List<MenuItem>
         {
-            List<MenuItem> menuItems = new List<MenuItem>
-            {
-                new MenuItem("Books Market",
-                    nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
-                    nameof(Areas.Market.Controllers.HomeController.ShowBooks),
-                    nameof(Areas.Market)),
-                new MenuItem("Книги",
-                    nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
-                    nameof(Areas.Market.Controllers.HomeController.ShowBooks),
-                    nameof(Areas.Market)),
-                new MenuItem("Заказы",
-                    nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
-                    nameof(Areas.Market.Controllers.HomeController.ShowBooks),
-                    nameof(Areas.Market)),
-                new MenuItem("Хранилище",
-                    nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
-                    nameof(Areas.Market.Controllers.HomeController.ShowBooks),
-                    nameof(Areas.Market))
+            new MenuItem("Books Market",
+                nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
+                nameof(Areas.Market.Controllers.HomeController.ShowBooks),
+                nameof(Areas.Market)),
+            new MenuItem("Книги",
+                nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
+                nameof(Areas.Market.Controllers.HomeController.ShowBooks),
+                nameof(Areas.Market)),
+            new MenuItem("Заказы",
+                nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
+                nameof(Areas.Market.Controllers.HomeController.ShowOrders),
+                nameof(Areas.Market)),
+            new MenuItem("Хранилище",
+                nameof(Areas.Market.Controllers.HomeController).Replace("Controller", string.Empty),
+                nameof(Areas.Market.Controllers.HomeController.ShowStore),
+                nameof(Areas.Market))
+        };
 
-            };
-
-            SetMenuItems(menuItems);
+        public UserMenu() : base(RolesHelper.USER_ROLE, menuItems)
+        {
         }
     }
 }

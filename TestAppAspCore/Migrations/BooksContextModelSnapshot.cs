@@ -158,7 +158,9 @@ namespace TestAppAspCore.Migrations
 
                     b.Property<int>("OrderId");
 
-                    b.Property<bool>("IsReturned");
+                    b.Property<int>("CountOfBook");
+
+                    b.Property<bool?>("IsReturned");
 
                     b.HasKey("BookId", "OrderId");
 

@@ -104,5 +104,37 @@ namespace TestAppAspCore.DBRepositories
         {
             return _context.Books.Include(book => book.Genre).Where(book => book.Genre.Title == genreTitle);
         }
+
+        public void IncCountBooks(Book book)
+        {
+            book.Count++;
+            _context.Update(book);
+            _context.SaveChanges();
+        }
+
+        public void IncCountBooks(Book book, int count)
+        {
+            book.Count+=count;
+            _context.Update(book);
+            _context.SaveChanges();
+        }
+
+        public int DecCountBook(Book book)
+        {
+            book.Count--;
+            _context.Update(book);
+            _context.SaveChanges();
+            return book.Count;
+        }
+
+        public int DecCountBook(Book book, int count)
+        {
+            if (book.Count < count)
+                throw new ArgumentException("Кол-во удаляемых книг превышает кол-во имеющихся");
+            book.Count -= count;
+            _context.Update(book);
+            _context.SaveChanges();
+            return book.Count;
+        }
     }
 }

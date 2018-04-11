@@ -31,19 +31,19 @@
                 <th class="text-center">Действия</th>
             </tr>
             @foreach (var book in Model.Books)
-        {
-            <tr>
-                <td>@book.Title</td>
-                <td>@book.Author</td>
-                <td>@book.GenreTitle</td>
-                <td>@book.DateCreating.Year</td>
-                <td>@book.Count</td>
-                <td>
-                    <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-info" style="padding-right:10px;">Изменить</a>
-                    <a asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger">Удалить</a>
-                </td>
-            </tr>
-    }
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.Author</td>
+                    <td>@book.GenreTitle</td>
+                    <td>@book.DateCreating.Year</td>
+                    <td>@book.Count</td>
+                    <td>
+                        <a asp-controller="Book" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-info pr-1">Изменить</a>
+                        <a asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger">Удалить</a>
+                    </td>
+                </tr>
+            }
         </table>
         <br />
         <page-link page-controller="Home" page-action="Index" page-model="@Model.PageViewModel" page-url-searchExpr="@Model.SearchExpr"></page-link>
@@ -51,6 +51,4 @@
         <br /><br />
     </div>
 </div>   
-@section Footer {
-    <script src="~/js/Basic.js" asp-append-version="true"></script>
-}
+

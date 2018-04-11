@@ -36,21 +36,24 @@ namespace TestAppAspCore.EFCore
                     Title = "Оно",
                     DateCreating = new DateTime(1984,1,1),
                     Author = "Стивен Кинг",
-                    Genre = genres[1]
+                    Genre = genres[1],
+                    Count = 3                  
                 },
                 new Book
                 {
                     Title = "Шерлок Холмс",
                     DateCreating = new DateTime(1944,1,1),
                     Author = "Конан Дойль",
-                    Genre = genres[0]
+                    Genre = genres[0],
+                    Count = 2
                 },
                 new Book
                 {
                     Title = "Виноваты звезды",
                     DateCreating = new DateTime(1999,1,1),
                     Author = "Нора Робертс",
-                    Genre = genres[2]
+                    Genre = genres[2],
+                    Count = 2
                 }
             };
             _context.Books.AddRange(books);

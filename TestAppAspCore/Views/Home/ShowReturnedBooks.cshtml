@@ -1,0 +1,65 @@
+﻿@model List<Book>
+@{
+    ViewData["Title"] = "Возвращенные книги";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="offset-2 col-7">
+            <br />
+            <h2>Возвращенные книги</h2>
+            <br />
+            <div id="messageBox"></div>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center">Название</th>
+                        <th class="text-center">Автор</th>
+                        <th class="text-center">Жанр</th>
+                        <th class="text-center">Дата создания</th>
+                        <th class="text-center">Количество</th>
+                        <th class="text-center" colspan="2">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model)
+                    {
+                        <tr id="@book.Id">
+                            <td>@book.Title</td>
+                            <td>@book.Author</td>
+                            <td>@book.Genre.Title</td>
+                            <td>@book.DateCreating.Year</td>
+                            <td>@book.Count</td>
+                            <td>
+                                <form asp-action="ConfirmReturnBook" asp-controller="Store" class="float-left"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-success="onSuccessConfirmBook"
+                                      data-ajax-failure="onFailedConfirmBook">
+                                    <input type="hidden" name="bookId" value="@book.Id" />
+                                    <input type="hidden" name="countReturnBooks" value="@book.Count" />
+                                    <button type="submit" class="btn btn-success">Принять</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form asp-action="CancelReturnBook" asp-controller="Store" class="float-left"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-success="onSuccessCancelBook"
+                                      data-ajax-failure="onFailedCancelBook">
+                                    <input type="hidden" name="bookId" value="@book.Id" />
+                                    <button type="submit" class="btn btn-danger">Вернуть</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Footer{
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/js/BookKeeperBooksAJAX.js"></script>
+}

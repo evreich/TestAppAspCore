@@ -57,6 +57,8 @@ namespace TestAppAspCore
 
             services.AddScoped<IBooksRepository, BooksRepository>();
             services.AddScoped<IGenresRepository, GenresRepository>();
+            services.AddScoped<IOrdersRepository, OrdersRepository>();
+            services.AddScoped<IBookOrderRepository, BookOrderRepository>();
 
             services.AddScoped<MenuService<MenuForRole>>();
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));

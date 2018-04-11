@@ -6,12 +6,13 @@ using TestAppAspCore.Models;
 
 namespace TestAppAspCore.DBRepositories
 {
-    interface IOrdersRepository
+    public interface IOrdersRepository
     {
         IEnumerable<Order> GetNotConfirmedOrders();
         IEnumerable<Order> GetOrdersForUser(string userId);
         Order GetOrder(int id);
         void AddOrder(Order order);
+        void EditOrder(Order order);
         void ConfirmOrder(int orderID);
         void CancelOrder(int orderID);
     }

@@ -39,17 +39,20 @@ namespace TestAppAspCore.Areas.Market.Controllers
         public IActionResult AddToCart(int Id, string returnUrl)
         {
             Book book = _repository.GetBook(Id);
+            int countBooksInStore = _repository.DecCountBook(book);
             if (book != null)
             {
                 _cart.AddItem(book);
             }
-            return Json(new { bookTitle = book.Title, countBooks = _cart.ComputeTotalValue() });
+            return Json(new { bookId=book.Id, bookCountInStore = countBooksInStore, bookTitle = book.Title, countBooksInCart = _cart.ComputeTotalValue() });
         }
 
         [HttpPost]
         public RedirectToActionResult RemoveFromCart(int Id, string returnUrl)
         {
             Book book = _repository.GetBook(Id);
+            var countReturnedBook = _cart.Lines.Where(line => line.Id == Id).SingleOrDefault().Count;
+            _repository.IncCountBooks(book, countReturnedBook);
             if (book != null)
             {              
                 _cart.RemoveLine(book);

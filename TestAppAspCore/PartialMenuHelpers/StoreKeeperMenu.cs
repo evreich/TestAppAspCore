@@ -8,19 +8,21 @@ namespace TestAppAspCore.PartialMenuHelpers
 {
     public class StoreKeeperMenu : MenuForRole
     {
-        public StoreKeeperMenu() : base(RolesHelper.STOREKEEPER_ROLE)
+        private static List<MenuItem> menuItems = new List<MenuItem>
         {
-            List<MenuItem> menuItems = new List<MenuItem>
-            {
-                new MenuItem("Books Market",
-                    nameof(Controllers.HomeController).Replace("Controller", string.Empty),
-                    nameof(Controllers.HomeController.Index)),
-                new MenuItem("Книги",
-                    nameof(Controllers.HomeController).Replace("Controller", string.Empty),
-                    nameof(Controllers.HomeController.Index)),
-            };
+            new MenuItem("Books Market",
+                nameof(Controllers.HomeController).Replace("Controller", string.Empty),
+                nameof(Controllers.HomeController.Index)),
+            new MenuItem("Книги",
+                nameof(Controllers.HomeController).Replace("Controller", string.Empty),
+                nameof(Controllers.HomeController.Index)),
+            new MenuItem("Жанры",
+                nameof(Controllers.HomeController).Replace("Controller", string.Empty),
+                nameof(Controllers.HomeController.ShowGenres))
+        };
 
-            SetMenuItems(menuItems);
+        public StoreKeeperMenu() : base(RolesHelper.STOREKEEPER_ROLE, menuItems)
+        {
         }
     }
 }

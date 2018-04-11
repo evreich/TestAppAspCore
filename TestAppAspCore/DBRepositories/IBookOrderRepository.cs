@@ -6,9 +6,14 @@ using TestAppAspCore.Models;
 
 namespace TestAppAspCore.DBRepositories
 {
-    interface IBookOrderRepository
+    public interface IBookOrderRepository
     {
-        void ChangeOrderBooks(int orderID, List<Book> deletedBooks);
-        List<Book> GetBooksOfOrder(int orderID);
+        void SetActualBooksForOrder(int orderID, List<BookOrder> actualBooks);
+        IEnumerable<BookOrder> GetBooksOfOrder(int orderID);
+        IEnumerable<Book> GetBooksForUser(string userID, bool? isReturned);
+        IEnumerable<Book> GetReturnedBooks();
+        void ReturnBook(int bookID);
+        void ConfirmBook(int bookID);
+        void CancelBook(int bookID);
     }
 }

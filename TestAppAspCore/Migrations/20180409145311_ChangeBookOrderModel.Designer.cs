@@ -11,8 +11,8 @@ using TestAppAspCore.EFCore;
 namespace TestAppAspCore.Migrations
 {
     [DbContext(typeof(BooksContext))]
-    [Migration("20180407095909_AddPropertyForBookOrder")]
-    partial class AddPropertyForBookOrder
+    [Migration("20180409145311_ChangeBookOrderModel")]
+    partial class ChangeBookOrderModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,7 +159,9 @@ namespace TestAppAspCore.Migrations
 
                     b.Property<int>("OrderId");
 
-                    b.Property<bool>("IsReturned");
+                    b.Property<int>("CountOfBook");
+
+                    b.Property<bool?>("IsReturned");
 
                     b.HasKey("BookId", "OrderId");
 
@@ -199,7 +201,7 @@ namespace TestAppAspCore.Migrations
 
                     b.Property<int>("HomeNumber");
 
-                    b.Property<bool>("IsSuccess");
+                    b.Property<bool?>("IsSuccess");
 
                     b.Property<string>("PostIndex")
                         .IsRequired();

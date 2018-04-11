@@ -17,5 +17,9 @@ namespace TestAppAspCore.DBRepositories
         Task<IEnumerable<Book>> GetBooksByFilter(string filter, List<Genre> genres);
         IEnumerable<Book> GetBooksByGenre(string genreTitle, List<Genre> genres);
         Task<IEnumerable<Book>> GetBooksByGenre(string genreTitle);
+        void IncCountBooks(Book book);
+        void IncCountBooks(Book book, int count);
+        int DecCountBook(Book book);
+        int DecCountBook(Book book, int count);
     }
 }

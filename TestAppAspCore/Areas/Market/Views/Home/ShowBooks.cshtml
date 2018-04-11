@@ -9,9 +9,9 @@
     <div class="container body-content col-sm-9 col-md-10 col-10 offset-sm-3 offset-md-2">
         <br />
         <div id="messageBox">
-            @if (TempData["orderID"] != null)
+            @if (ViewData["message"] != null)
             {
-                <div id="alert-closing" class="alert alert-success">Заказ <b>@TempData["orderID"]</b> успешно принят и отправлен на рассмотрение менеджеру!</div>
+                <div id="alert-closing" class="alert alert-success">@TempData["message"]</div>
             }
         </div>
 
@@ -41,6 +41,6 @@
 </div>
 
 @section Footer {
-    <script src="~/js/Basic.js" asp-append-version="true"></script>
+    <script src="~/js/UserCart.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
 }

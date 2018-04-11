@@ -1,0 +1,68 @@
+﻿@model OrderViewModel
+@{
+    ViewData["Title"] = "Информация о заказе";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="offset-2 col-7">
+                <h2>Заказ</h2>
+                <div class="form-group">
+                    <label asp-for="Order.Country" class="control-label"></label><br />
+                    <input type="text" asp-for="Order.Country" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Order.State" class="control-label"></label><br />
+                    <input type="text" asp-for="Order.State" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Order.City" class="control-label"></label><br />
+                    <input type="text" asp-for="Order.City" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Order.Street" class="control-label"></label><br />
+                    <input type="text" asp-for="Order.Street" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Order.HomeNumber" class="control-label"></label><br />
+                    <input type="number" max="500" min="1" asp-for="Order.HomeNumber" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Order.PostIndex" class="control-label"></label><br />
+                    <input type="text" asp-for="Order.PostIndex" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Order.DateReturn" class="control-label"></label><br />
+                    <input type="date" asp-for="Order.DateReturn" class="form-control" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Order.GiftWrap" class="control-label"></label><br />
+                    <input class="form-control" type="text" asp-for="Order.GiftWrap" value="@(Model.Order.GiftWrap ? "Требуется" : "Не требуется")" readonly />
+                </div>
+                <div class="form-group">
+                    <label asp-for="BooksOfOrder" class="control-label"></label><br />
+                    <ul class="list-group">
+                        @foreach (var book in Model.BooksOfOrder)
+                        {
+                            <li class="list-group-item justify-content-between align-items-center">
+                                @book.Title
+                                <span class=" ml-1 badge badge-primary badge-pill">@book.Count</span>
+                            </li>
+                        }
+                    </ul>
+                    <br />
+                </div>
+                <a asp-controller="Home" 
+                       asp-action="ShowOrders"
+                       asp-area="@(User.IsInRole(RolesHelper.USER_ROLE) ? "Market" : string.Empty)"
+                       >Назад</a>
+                <br /><br /><br /><br />
+            </div>
+        </div>
+    </div>
+</div>
+
+

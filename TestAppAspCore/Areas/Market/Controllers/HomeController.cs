@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TestAppAspCore.Areas.Market.ViewModels;
 using TestAppAspCore.DBRepositories;
@@ -76,6 +77,26 @@ namespace TestAppAspCore.Areas.Market.Controllers
                 ActionName = nameof(this.ShowBooksByGenre)
             };
             return View(nameof(ShowBooks),indexViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowOrders([FromServices] IOrdersRepository ordersRepository, 
+                                                    [FromServices] UserManager<User> userManager)
+        {
+            var userID = (await userManager.FindByNameAsync(User.Identity.Name)).Id;
+            return View(ordersRepository.GetOrdersForUser(userID));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowStore([FromServices] IBookOrderRepository boRepository,
+                                            [FromServices] UserManager<User> userManager)
+        {
+            var userID = (await userManager.FindByNameAsync(User.Identity.Name)).Id;
+            return View(new StoreBooksViewModel
+            {
+                StoreBooks = boRepository.GetBooksForUser(userID, null).ToList(),
+                NotConfirmedBooks = boRepository.GetBooksForUser(userID, false).ToList()
+            });            
         }
     }
 }

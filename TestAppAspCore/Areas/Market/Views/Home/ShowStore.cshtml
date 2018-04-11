@@ -1,0 +1,93 @@
+﻿@model StoreBooksViewModel
+@{
+    ViewData["Title"] = "Полученные книги";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="offset-2 col-7">
+            <br />
+            <h2>Полученные книги</h2>
+            <br />
+            <div id="messageBox"></div>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center">Название</th>
+                        <th class="text-center">Автор</th>
+                        <th class="text-center">Жанр</th>
+                        <th class="text-center">Дата создания</th>
+                        <th class="text-center">Количество</th>
+                        <th class="text-center">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model.StoreBooks)
+                    {
+                        <tr id="@book.Id">
+                            <td>@book.Title</td>
+                            <td>@book.Author</td>
+                            <td>@book.Genre.Title</td>
+                            <td>@book.DateCreating.Year</td>
+                            <td>@book.Count</td>
+                            <td>
+                                <form asp-area="Market" asp-action="ConfirmReturnBook" asp-controller="Store"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-success="onSuccessReturnBook"
+                                      data-ajax-failure="onFailedReturnBook">
+                                    <input type="hidden" name="bookId" value="@book.Id" />
+                                    <button type="submit" name="addBookInCart" class="btn btn-info">Вернуть</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <h2>Непринятые книги</h2>
+            <br />
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="text-center">Название</th>
+                        <th class="text-center">Автор</th>
+                        <th class="text-center">Жанр</th>
+                        <th class="text-center">Дата создания</th>
+                        <th class="text-center">Количество</th>
+                        <th class="text-center">Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model.NotConfirmedBooks)
+                    {
+                        <tr id="@book.Id">
+                            <td>@book.Title</td>
+                            <td>@book.Author</td>
+                            <td>@book.Genre.Title</td>
+                            <td>@book.DateCreating.Year</td>
+                            <td>@book.Count</td>
+                            <td>
+                                <form asp-area="Market" asp-action="ConfirmReturnBook" asp-controller="Store"
+                                      data-ajax="true" data-ajax-method="POST"
+                                      data-ajax-success="onSuccessReturnBook"
+                                      data-ajax-failure="onFailedReturnBook">
+                                    <input type="hidden" name="bookId" value="@book.Id" />
+                                    <button type="submit" class="btn btn-info">Вернуть</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <a asp-area="Market" asp-controller="Home" asp-action="ShowBooks">Назад</a>
+        </div>
+    </div>
+</div>
+
+@section Footer {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/js/UserReturnBooks.js"></script>
+}

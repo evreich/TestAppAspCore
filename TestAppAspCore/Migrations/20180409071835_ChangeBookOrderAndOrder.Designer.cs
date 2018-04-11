@@ -11,8 +11,8 @@ using TestAppAspCore.EFCore;
 namespace TestAppAspCore.Migrations
 {
     [DbContext(typeof(BooksContext))]
-    [Migration("20180407102720_NullableIsSuccess")]
-    partial class NullableIsSuccess
+    [Migration("20180409071835_ChangeBookOrderAndOrder")]
+    partial class ChangeBookOrderAndOrder
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -158,6 +158,8 @@ namespace TestAppAspCore.Migrations
                     b.Property<int>("BookId");
 
                     b.Property<int>("OrderId");
+
+                    b.Property<int>("CountOfBook");
 
                     b.Property<bool>("IsReturned");
 

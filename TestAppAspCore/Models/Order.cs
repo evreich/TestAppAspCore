@@ -8,22 +8,20 @@ using System.Threading.Tasks;
 namespace TestAppAspCore.Models
 {
     public class Order
-    {
-        [BindNever]
-        [Required]
+    {  
         public string UserId { get; set; }
 
         [BindNever]
         public User User { get; set; }
-
-        [BindNever]
+     
         public int OrderId { get; set; }
-
+        
         [BindNever]
-        public bool? IsSuccess { get; set; } = null;
+        public bool? IsSuccess { get; set; }
 
         [BindRequired]
         [Required]
+        [Display(Name = "Дата возврата")]
         public DateTime DateReturn { get; set; }
 
         [BindNever]

@@ -21,10 +21,7 @@ namespace TestAppAspCore.Infrastructure
                 try
                 {
                     var db = services.GetRequiredService<BooksContext>();
-                    if (!db.Database.EnsureCreated())
-                    {
-                        db.Database.Migrate();
-                    }
+                    db.Database.Migrate();
                 }
                 catch (Exception ex)
                 {

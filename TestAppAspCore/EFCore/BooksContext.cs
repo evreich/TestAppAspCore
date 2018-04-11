@@ -21,7 +21,7 @@ namespace TestAppAspCore.EFCore
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {         
+        {
             modelBuilder.Entity<BookOrder>()
                 .HasKey(bc => new { bc.BookId, bc.OrderId });
 
