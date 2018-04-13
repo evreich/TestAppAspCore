@@ -41,7 +41,7 @@ namespace TestAppAspCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _booksRepository.AddBook(BookConverter.ConvertViewModelToModel(book));
+                _booksRepository.AddElem(BookConverter.ConvertViewModelToModel(book));
                 TempData["message"] = $"Книга \"{book.Title}\" успешно добавлена";
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
             }
@@ -60,7 +60,7 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
+            var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetElem(id));
 
             return View(new ActionBooksPagesViewModel
             {
@@ -80,7 +80,7 @@ namespace TestAppAspCore.Controllers
                 throw new ArgumentException("Book ID is empty or <= 0");
             if (ModelState.IsValid)
             {
-                _booksRepository.EditBook(BookConverter.ConvertViewModelToModel(book));
+                _booksRepository.EditElem(BookConverter.ConvertViewModelToModel(book));
                 TempData["message"] = $"Книга \"{book.Title}\" успешно изменена";
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
             }
@@ -100,7 +100,7 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Show(int id)
         {
-            var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
+            var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetElem(id));
 
             return View(book);
         }
@@ -109,7 +109,7 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetBook(id));
+            var book = BookConverter.ConvertModelToViewModel(_booksRepository.GetElem(id));
 
             return View(new ActionBooksPagesViewModel
             {
@@ -129,7 +129,7 @@ namespace TestAppAspCore.Controllers
                 throw new ArgumentException("Book ID is empty or <= 0");
             if (ModelState.IsValid)
             {
-                _booksRepository.DeleteBook(BookConverter.ConvertViewModelToModel(book));
+                _booksRepository.DeleteElem(BookConverter.ConvertViewModelToModel(book));
                 TempData["message"] = $"Книга \"{book.Title}\" успешно удалена";
                 return RedirectToAction(nameof(HomeController.Index), nameof(HomeController).Replace("Controller", ""));
             }

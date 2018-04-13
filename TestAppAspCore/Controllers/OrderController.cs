@@ -36,7 +36,7 @@ namespace TestAppAspCore.Controllers
             _ordersRepository.GetOrder(orderID)
                 .BookOrders.ToList().ForEach((BookOrder bo) =>
                 {
-                    var book = _booksRepository.GetBook(bo.BookId);
+                    var book = _booksRepository.GetElem(bo.BookId);
                     _booksRepository.IncCountBooks(book, bo.CountOfBook);
                 });
             return Json(new { ID = orderID, message = $"Заказ {orderID} отменен!" });

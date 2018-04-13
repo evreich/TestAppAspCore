@@ -17,15 +17,18 @@ namespace TestAppAspCore
 {
     public class Program
     {
+        private static async void InitDB(IServiceProvider service)
+        {
+            BooksAndGenresSeedData.EnsurePopulated(service);
+            await IdentitySeedData.EnsureRoles(service);
+            await IdentitySeedData.EnsureMenuElements(service);
+            await IdentitySeedData.EnsurePopulated(service);
+        }
+
         public static void Main(string[] args)
         {
             var host = BuildWebHost(args).MigrateDatabase();
-            
-            //заполнение БД в случае отсутствия данных
-            BooksAndGenresSeedData.EnsurePopulated(host.Services);
-            IdentitySeedData.EnsureRoles(host.Services);
-            IdentitySeedData.EnsurePopulated(host.Services);
-
+            InitDB(host.Services);
             host.Run();
         }
 

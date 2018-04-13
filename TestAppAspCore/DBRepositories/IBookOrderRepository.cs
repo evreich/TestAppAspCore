@@ -6,7 +6,7 @@ using TestAppAspCore.Models;
 
 namespace TestAppAspCore.DBRepositories
 {
-    public interface IBookOrderRepository
+    public interface IBookOrderRepository : IDisposable
     {
         void SetActualBooksForOrder(int orderID, List<BookOrder> actualBooks);
         IEnumerable<BookOrder> GetBooksOfOrder(int orderID);

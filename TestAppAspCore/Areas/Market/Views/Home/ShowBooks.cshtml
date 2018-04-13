@@ -1,4 +1,5 @@
-﻿@model ShowBooksViewModel
+﻿@using TestAppAspCore.Areas.Market.Controllers
+@model ShowBooksViewModel
 @{
     ViewData["Title"] = "Список книг";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -15,7 +16,10 @@
             }
         </div>
 
-        <form asp-controller="Home" asp-action="ShowBooks" asp-route-page="1" method="get">
+        <form asp-controller="Home" 
+              asp-action="@(Model.Genre != string.Empty ? nameof(HomeController.ShowBooksByGenre) : nameof(HomeController.ShowBooks))"
+              asp-route-page="1" 
+              method="get">
             <h2>Фильтр</h2>
             <div class="form-inline form-group">
                 <label for="searchExpr" class="control-label"></label>
@@ -35,7 +39,14 @@
         </div>
 
         <br />
-        <page-link page-controller="Home" page-action="@Model.ActionName" page-model="@Model.PageViewModel" page-url-searchExpr="@Model.SearchExpr"></page-link>
+        <page-link 
+                   page-controller="Home" 
+                   page-action="@Model.ActionName" 
+                   page-model="@Model.PageViewModel" 
+                   page-url-searchExpr="@Model.SearchExpr"
+                   page-url-genre="@(Model.Genre)"
+                   >
+        </page-link>
         <br /><br />
     </div>
 </div>

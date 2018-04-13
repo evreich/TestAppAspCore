@@ -36,27 +36,20 @@ namespace TestAppAspCore.Controllers
             if (string.IsNullOrEmpty(searchExpr))
             {
                 books = await _booksRepository.GetAllBooks();
-
-                indexViewModel = new IndexBookViewModel
-                {
-                    Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
-                            .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
-                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
-                };
-                return View(indexViewModel);
             }
             else
             {
                 books = await _booksRepository.GetBooksByFilter(searchExpr, _genresRepository.GetAllGenres().ToList());
-                indexViewModel = new IndexBookViewModel
-                {
-                    Books = books.OrderBy(book => book.Title).Skip((page.Value - 1) * COUNT_ELEMS_ON_PAGE)
-                            .Take(COUNT_ELEMS_ON_PAGE).Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
-                    PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
-                    SearchExpr = searchExpr
-                };
-                return View(indexViewModel);
             }
+            indexViewModel = new IndexBookViewModel
+            {
+                Books = _booksRepository.PartBooksForPage(books, page.Value, COUNT_ELEMS_ON_PAGE)
+                .Select(book => BookConverter.ConvertModelToViewModel(book)).ToList(),
+                PageViewModel = new PageViewModel(books.Count(), page.Value, COUNT_ELEMS_ON_PAGE),
+                SearchExpr = String.IsNullOrEmpty(searchExpr) ? string.Empty : searchExpr
+                //, ActionName = nameof(this.ShowBooks)
+            };
+            return View(indexViewModel);
         }
 
         // GET: Home/ShowGenres

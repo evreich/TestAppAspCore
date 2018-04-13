@@ -101,7 +101,7 @@ namespace TestAppAspCore.Controllers
                 //возвращаем на склад
                 returned_books.ForEach((BookOrder bo) =>
                 {
-                    var book = _booksRepository.GetBook(bo.BookId);
+                    var book = _booksRepository.GetElem(bo.BookId);
                     _booksRepository.IncCountBooks(book, bo.CountOfBook);
                 });
 

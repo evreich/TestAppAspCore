@@ -41,7 +41,16 @@ namespace TestAppAspCore.EFCore
                 new Genre
                 {
                     Title = "Роман"
+                },
+                new Genre
+                {
+                    Title = "Антиутопия"
+                },
+                new Genre
+                {
+                    Title = "Приключения"
                 }
+
             };
             _context.Genres.AddRange(genres);
             _context.SaveChanges();

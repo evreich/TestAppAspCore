@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using QPD.DBUpdaters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,25 +18,25 @@ namespace TestAppAspCore.DBRepositories
             _context = context;
         }
 
-        public void AddGenre(Genre genre)
+        public void AddElem(Genre elem)
         {
-            _context.Genres.Add(genre);
+            _context.Genres.Add(elem);
             _context.SaveChanges();
         }
 
-        public void DeleteGenre(Genre genre)
+        public void DeleteElem(Genre elem)
         {
-            _context.Genres.Remove(genre);
+            _context.Genres.Remove(elem);
             _context.SaveChanges();
         }
 
-        public void EditGenre(Genre genre)
+        public void EditElem(Genre elem)
         {
-            _context.Genres.Update(genre);
+            _context.Genres.Update(elem);
             _context.SaveChanges();
         }
 
-        public Genre GetGenre(int id)
+        public Genre GetElem(int id)
         {
             return _context.Genres.Include(genre => genre.Books).Single(Genre => Genre.Id == id);
         }

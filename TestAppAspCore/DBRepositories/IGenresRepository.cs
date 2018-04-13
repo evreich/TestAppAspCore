@@ -6,13 +6,9 @@ using TestAppAspCore.Models;
 
 namespace TestAppAspCore.DBRepositories
 {
-    public interface IGenresRepository
+    public interface IGenresRepository : ICRUDRepository<Genre>, IDisposable
     {
         IEnumerable<Genre> GetAllGenres();
-        Genre GetGenre(int id);
-        void AddGenre(Genre genre);
-        void EditGenre(Genre genre);
-        void DeleteGenre(Genre genre);
         IEnumerable<Book> GetAllBookCurrGenre(int id);
     }
 }

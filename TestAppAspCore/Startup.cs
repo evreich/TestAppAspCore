@@ -34,13 +34,13 @@ namespace TestAppAspCore
 
             services.AddLogging();
             services.AddDbContext<BooksContext>(options => options.UseSqlServer(defaultConnection), ServiceLifetime.Transient);
-            services.AddIdentity<User, IdentityRole>(opts =>
+            services.AddIdentity<User, UserRole>(opts =>
             {
                 opts.Password.RequiredLength = 5; 
                 opts.Password.RequireNonAlphanumeric = false;   
                 opts.Password.RequireLowercase = false; 
                 opts.Password.RequireUppercase = false; 
-                opts.Password.RequireDigit = true;
+                opts.Password.RequireDigit = false;
                 opts.Lockout.MaxFailedAccessAttempts = 5;
                 opts.Lockout.AllowedForNewUsers = true;
                 opts.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
@@ -48,6 +48,7 @@ namespace TestAppAspCore
             })
             .AddEntityFrameworkStores<BooksContext>()
             .AddDefaultTokenProviders();
+
             services.ConfigureApplicationCookie(opts =>
             {
                 opts.ExpireTimeSpan = TimeSpan.FromMinutes(60);
@@ -59,11 +60,14 @@ namespace TestAppAspCore
             services.AddScoped<IGenresRepository, GenresRepository>();
             services.AddScoped<IOrdersRepository, OrdersRepository>();
             services.AddScoped<IBookOrderRepository, BookOrderRepository>();
+            services.AddScoped<IMenuElementRepository, MenuElementsRepository>();
 
-            services.AddScoped<MenuService<MenuForRole>>();
+            //services.AddScoped<MenuService<MenuForRole>>();
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddMvc();
+
+            //т.к. сессия фактически хранится в кеше сервера, нужно подключить зависимости кеша
             services.AddMemoryCache();
             services.AddSession();
         }
@@ -105,19 +109,19 @@ namespace TestAppAspCore
                 );
 
                 routes.MapRoute(
-                    name: "adminGenres",
+                    name: "Genres",
                     template: "Genres",
                     defaults: new { controller = "Home", action = "ShowGenres" }
                 );
 
                 routes.MapRoute(
-                    name: "adminIndexBooksPagination",
+                    name: "IndexBooksPagination",
                     template: "Books/Page/{page:int}",
                     defaults: new { controller = "Home", action = "Index" });
 
                 routes.MapRoute(
-                    name: "adminDefault",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "Default",
+                    template: "{controller=Home}/{action=RedirectToRoleStartPage}/{id?}");
             });
         }
     }

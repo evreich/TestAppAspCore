@@ -38,7 +38,7 @@ namespace TestAppAspCore.Areas.Market.Controllers
         [HttpPost]
         public IActionResult AddToCart(int Id, string returnUrl)
         {
-            Book book = _repository.GetBook(Id);
+            Book book = _repository.GetElem(Id);
             int countBooksInStore = _repository.DecCountBook(book);
             if (book != null)
             {
@@ -50,7 +50,7 @@ namespace TestAppAspCore.Areas.Market.Controllers
         [HttpPost]
         public RedirectToActionResult RemoveFromCart(int Id, string returnUrl)
         {
-            Book book = _repository.GetBook(Id);
+            Book book = _repository.GetElem(Id);
             var countReturnedBook = _cart.Lines.Where(line => line.Id == Id).SingleOrDefault().Count;
             _repository.IncCountBooks(book, countReturnedBook);
             if (book != null)

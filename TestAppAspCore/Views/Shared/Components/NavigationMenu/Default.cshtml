@@ -2,7 +2,7 @@
 
 @foreach (Genre genre in Model)
 {
-    @if (Context.Request.Path.ToString().Contains(nameof(TestAppAspCore.Areas.Market)))
+    @if (User.IsInRole(RolesHelper.USER_ROLE))
     {
         <a class="list-group-item menu-item @(genre.Title == ViewBag.SelectedGenre ? "menu-item-selected" : string.Empty)"            
            style="text-align:center"

@@ -34,7 +34,7 @@ namespace TestAppAspCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                _genresRepository.AddGenre(new Genre { Title = genre.Title });
+                _genresRepository.AddElem(new Genre { Title = genre.Title });
                 TempData["message"] = $"Жанр \"{genre.Title}\" успешно добавлен";
                 return RedirectToAction(nameof(HomeController.ShowGenres), nameof(HomeController).Replace("Controller", ""));
             }
@@ -48,7 +48,7 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var genre = _genresRepository.GetGenre(id);
+            var genre = _genresRepository.GetElem(id);
 
             return View(genre);
         }
@@ -62,7 +62,7 @@ namespace TestAppAspCore.Controllers
                 throw new ArgumentException("Genre ID is empty or <= 0");
             if (ModelState.IsValid)
             {
-                _genresRepository.EditGenre(genre);
+                _genresRepository.EditElem(genre);
                 TempData["message"] = $"Жанр \"{genre.Title}\" успешно изменен";
                 return RedirectToAction(nameof(HomeController.ShowGenres), nameof(HomeController).Replace("Controller", ""));
             }
@@ -76,7 +76,7 @@ namespace TestAppAspCore.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var genre = _genresRepository.GetGenre(id);
+            var genre = _genresRepository.GetElem(id);
 
             return View(genre);
         }
@@ -90,7 +90,7 @@ namespace TestAppAspCore.Controllers
                 throw new ArgumentException("Genre ID is empty or <= 0");
             if (ModelState.IsValid)
             {
-                _genresRepository.DeleteGenre(genre);
+                _genresRepository.DeleteElem(genre);
                 TempData["message"] = $"Жанр \"{genre.Title}\" успешно удален";
                 return RedirectToAction(nameof(HomeController.ShowGenres), nameof(HomeController).Replace("Controller", ""));
             }

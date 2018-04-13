@@ -6,7 +6,7 @@ using TestAppAspCore.Models;
 
 namespace TestAppAspCore.DBRepositories
 {
-    public interface IOrdersRepository
+    public interface IOrdersRepository : IDisposable
     {
         IEnumerable<Order> GetNotConfirmedOrders();
         IEnumerable<Order> GetOrdersForUser(string userId);

@@ -21,6 +21,7 @@ namespace TestAppAspCore.Infrastructure
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
+
         public PageViewModel PageModel { get; set; }
         public string PageAction { get; set; }
         public string PageController { get; set; }

@@ -15,9 +15,9 @@ namespace TestAppAspCore.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<UserRole> _roleManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, RoleManager<UserRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -100,10 +100,12 @@ namespace TestAppAspCore.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> LogOff()
+        public async Task<IActionResult> LogOff([FromServices] Cart cart)
         {
             // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
+            // чистим корзину
+            cart.Clear();
             return RedirectToAction(nameof(AccountController.Login), nameof(AccountController).Replace("Controller", ""));
         }
 
@@ -128,7 +130,7 @@ namespace TestAppAspCore.Controllers
                 {
                     UserId = user.Id,
                     UserEmail = user.Email,
-                    AllRoles = new SelectList(allRoles, nameof(IdentityRole.Name), nameof(IdentityRole.Name),allRoles.FirstOrDefault(role => role.Name == userRoles[0])) 
+                    AllRoles = new SelectList(allRoles, nameof(UserRole.Name), nameof(UserRole.Name),allRoles.FirstOrDefault(role => role.Name == userRoles[0])) 
                 };
                 return View(model);
             }

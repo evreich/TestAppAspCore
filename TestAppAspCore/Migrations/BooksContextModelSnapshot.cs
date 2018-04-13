@@ -20,30 +20,6 @@ namespace TestAppAspCore.Migrations
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -166,7 +142,7 @@ namespace TestAppAspCore.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("BookOrder");
+                    b.ToTable("BookOrders");
                 });
 
             modelBuilder.Entity("TestAppAspCore.Models.Genre", b =>
@@ -181,6 +157,24 @@ namespace TestAppAspCore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genres");
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.MenuElement", b =>
+                {
+                    b.Property<int>("MenuElementId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AspActionName");
+
+                    b.Property<string>("AspAreaName");
+
+                    b.Property<string>("AspControllerName");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("MenuElementId");
+
+                    b.ToTable("MenuElements");
                 });
 
             modelBuilder.Entity("TestAppAspCore.Models.Order", b =>
@@ -211,8 +205,7 @@ namespace TestAppAspCore.Migrations
                     b.Property<string>("Street")
                         .IsRequired();
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<string>("UserId");
 
                     b.HasKey("OrderId");
 
@@ -275,9 +268,46 @@ namespace TestAppAspCore.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("TestAppAspCore.Models.UserRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.UserRoleMenuElement", b =>
+                {
+                    b.Property<string>("UserRoleId");
+
+                    b.Property<int>("MenuElementId");
+
+                    b.HasKey("UserRoleId", "MenuElementId");
+
+                    b.HasIndex("MenuElementId");
+
+                    b.ToTable("UserRoleMenuElements");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("TestAppAspCore.Models.UserRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -301,7 +331,7 @@ namespace TestAppAspCore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("TestAppAspCore.Models.UserRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -345,7 +375,19 @@ namespace TestAppAspCore.Migrations
                 {
                     b.HasOne("TestAppAspCore.Models.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TestAppAspCore.Models.UserRoleMenuElement", b =>
+                {
+                    b.HasOne("TestAppAspCore.Models.MenuElement", "MenuElement")
+                        .WithMany("UserRoleMenuElements")
+                        .HasForeignKey("MenuElementId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("TestAppAspCore.Models.UserRole", "UserRole")
+                        .WithMany("UserRoleMenuElements")
+                        .HasForeignKey("UserRoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QPD.PartialMenuLibrary
 {
-    public abstract class MenuForRole
+    public class MenuForRole
     {
         public string RoleName { get; }
         public List<MenuItem> MenuItems { get; } = new List<MenuItem>();

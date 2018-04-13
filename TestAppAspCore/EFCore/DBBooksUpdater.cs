@@ -54,6 +54,190 @@ namespace TestAppAspCore.EFCore
                     Author = "Нора Робертс",
                     Genre = genres[2],
                     Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга1",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[2],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга2",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[3],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга3",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[4],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга5",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[1],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга1411",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[2],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга1213",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[4],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга12342",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[3],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга15231",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[1],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга1632",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[4],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга1765",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[3],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга12351561",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[0],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга6231",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[0],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга43261",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[0],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга1745",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[0],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга145127",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[4],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга142352",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[2],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга1356136",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[2],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга174522",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[3],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга134672",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[4],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга198563",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[0],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга32631",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[2],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга435631",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[1],
+                    Count = 2
+                },
+                new Book
+                {
+                    Title = "Книга3454621",
+                    DateCreating = new DateTime(1967,1,1),
+                    Author = "Автор автор",
+                    Genre = genres[4],
+                    Count = 2
                 }
             };
             _context.Books.AddRange(books);

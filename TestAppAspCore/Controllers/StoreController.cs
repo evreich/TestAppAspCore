@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestAppAspCore.DBRepositories;
+using TestAppAspCore.Models;
 
 namespace TestAppAspCore.Controllers
 {
@@ -21,7 +22,7 @@ namespace TestAppAspCore.Controllers
         public IActionResult ConfirmReturnBook(int bookId, int countReturnBooks, [FromServices] IBooksRepository booksRepository)
         {
             _boRepository.ConfirmBook(bookId);
-            var book = booksRepository.GetBook(bookId);
+            Book book = booksRepository.GetElem(bookId);
             booksRepository.IncCountBooks(book, countReturnBooks);
 
             return Json(new { id = bookId, message = "Книга успешно возвращена в библиотеку!" });
